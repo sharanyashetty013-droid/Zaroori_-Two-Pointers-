@@ -4,7 +4,7 @@
 
 ### *Ask once more before a big decision.*
 
-`🟣 Landing page live` &nbsp; `🌐 हिन्दी · ಕನ್ನಡ · English` &nbsp; `🔒 100% anonymous` &nbsp; `🏆 recHERsion 2026`
+`🟣 Landing page live` &nbsp; `🌐 हिन्दी · ಕನ್ನಡ · English` &nbsp; `🔒 100% anonymous` &nbsp;
 
 **A multilingual, audio-first tool that helps an ASHA didi sit with a village woman advised to remove her womb, and gently nudge her to pause, ask, and get a second opinion.**
 
