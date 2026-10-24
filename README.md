@@ -1,6 +1,6 @@
 <div align="center">
 
-# ❓ Zaroori?
+#  Zaroori❓
 
 ### *Ask once more before a big decision.*
 
@@ -8,13 +8,11 @@
 
 **A multilingual, audio-first tool that helps an ASHA didi sit with a village woman advised to remove her womb, and gently nudge her to pause, ask, and get a second opinion.**
 
-[📄 Read the PRD](docs/Zaroori_PRD.pdf) &nbsp;•&nbsp; [🚀 Run it](#-run-the-landing-page) &nbsp;•&nbsp; [🧭 How it flows](#-how-it-flows) &nbsp;•&nbsp; [🛡️ Our principles](#️-principles-we-will-not-break)
-
 </div>
 
 ---
 
-## 💔 Why this exists
+##  Why this exists
 
 > In some villages, young women were pushed into hysterectomy with **no clear medical need**.
 > Many cannot read. Nobody told them they could get a **second opinion**. Some were pressured by **work contractors**.
@@ -30,7 +28,7 @@ It says one thing, and says it kindly:
 
 ---
 
-## ✨ What it does
+##  What it does
 
 <table>
 <tr>
@@ -73,7 +71,7 @@ An anonymous district dashboard flags hospitals with unusual surgery-advice coun
 
 ---
 
-## 👥 Who uses it
+##  Who uses it
 
 | | Role | What they do |
 |---|---|---|
@@ -84,7 +82,7 @@ An anonymous district dashboard flags hospitals with unusual surgery-advice coun
 
 ---
 
-## 🧭 How it flows
+##  How it flows
 
 ```mermaid
 flowchart LR
@@ -117,7 +115,7 @@ flowchart LR
 
 ---
 
-## 🛡️ Principles we will not break
+##  Principles we will not break
 
 | # | Principle |
 |---|---|
@@ -158,20 +156,10 @@ GET  /hospitals?district=       nearest government hospitals
 
 ---
 
-## 🚧 Project status
-
-| Piece | Status |
-|---|:---:|
-| Landing page (3 languages, 3D hero) | ✅ Built |
-| Language picker + question flow | 🔜 Planned |
-| Result screen + red alert screen | 🔜 Planned |
-| Anonymous PDF slip | 🔜 Planned |
-| Backend API + database | 🔜 Planned |
-| Dashboard map + hospital flag rule | 🔜 Planned |
 
 ---
 
-## 🚀 Run the landing page
+##  Run the landing page
 
 No build step needed.
 
@@ -182,7 +170,7 @@ python3 -m http.server 8000
 # open http://localhost:8000
 ```
 
-### 🔗 Connect the "Open Console" button to the frontend
+###  Connect the "Open Console" button to the frontend
 
 Edit **`config.js`** and set your frontend address:
 
@@ -207,7 +195,7 @@ window.ZAROORI_CONFIG = {
 
 ---
 
-## 🔐 Privacy and safety
+##  Privacy and safety
 
 - 🕶️ Anonymous by design: only session ID, language, age band, district, advising hospital, answers, coercion flag and timestamp
 - ✅ Consent shown before any case is sent
