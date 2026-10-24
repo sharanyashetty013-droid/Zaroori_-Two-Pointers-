@@ -63,3 +63,12 @@ p { color: var(--muted); font-size: 1.1rem; line-height: 1.5; }
   background: none; border: none; color: var(--lavender);
   font-family: inherit; font-size: 1.1rem; padding: 12px 0; cursor: pointer;
 }
+
+h2 { font-size: 1.3rem; margin: 0 0 10px; }
+.ask-list { margin: 0; padding-left: 22px; line-height: 1.6; font-size: 1.1rem; color: var(--text); }
+.ask-list li { margin-bottom: 8px; }
+.select {
+  width: 100%; padding: 16px; border-radius: 16px; font-size: 1.1rem;
+  font-family: inherit; background: var(--bg); color: var(--text);
+  border: 1px solid var(--card-border);
+}
