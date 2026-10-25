@@ -1,0 +1,243 @@
+body.glass-bg {
+  background:
+    radial-gradient(circle at 0% 100%, #ebb7c6 0%, transparent 52%),
+    radial-gradient(circle at 100% 0%, #7b82c6 0%, transparent 55%),
+    linear-gradient(160deg, #8187c2 0%, #a08fc2 55%, #c29bbd 100%);
+  background-attachment: fixed;
+  overflow-x: hidden;
+}
+body.glass-bg .app {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* ---------- Background layers ---------- */
+.lg-orbs { position: fixed; inset: 0; overflow: hidden; z-index: 0; pointer-events: none; }
+.lg-orb { position: absolute; border-radius: 50%; filter: blur(70px); opacity: 0.55; animation: lg-float 14s ease-in-out infinite; }
+.lg-orb.o1 { width: 320px; height: 320px; background: #d9cfff; top: -90px; left: -110px; }
+.lg-orb.o2 { width: 280px; height: 280px; background: #ffc2d8; bottom: 40px; right: -100px; animation-delay: -5s; }
+.lg-orb.o3 { width: 240px; height: 240px; background: #a9c4ff; bottom: -90px; left: 6%; animation-delay: -9s; }
+@keyframes lg-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-26px); }
+}
+
+/* Thin orbit rings behind the panel */
+.lg-sphere {
+  position: fixed; left: 50%; top: 50%;
+  width: 600px; height: 600px; transform: translate(-50%, -50%);
+  border-radius: 50%; z-index: 0; pointer-events: none;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.lg-sphere::after {
+  content: ''; position: absolute; inset: 70px; border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0) 65%);
+}
+
+/* Very faint grain (delete this block if you don't like it) */
+.lg-grain {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.5;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .08 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* ---------- The big glass panel ---------- */
+.lg-page {
+  position: relative; z-index: 1;
+  padding: 30px 22px 22px;
+  border-radius: 40px;
+  color: #fff;
+  text-shadow: 0 1px 14px rgba(45, 35, 110, 0.3);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(28px) saturate(150%);
+  -webkit-backdrop-filter: blur(28px) saturate(150%);
+  box-shadow:
+    0 30px 70px rgba(50, 40, 120, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.15);
+}
+.lg-page > * { animation: lg-rise 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.lg-page > *:nth-child(2) { animation-delay: 0.06s; }
+.lg-page > *:nth-child(3) { animation-delay: 0.12s; }
+.lg-page > *:nth-child(4) { animation-delay: 0.18s; }
+.lg-page > *:nth-child(5) { animation-delay: 0.24s; }
+.lg-page > *:nth-child(6) { animation-delay: 0.3s; }
+@keyframes lg-rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Logo and tiles ---------- */
+.lg-logo { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 20px; }
+.lg-logo-chip {
+  width: 48px; height: 48px; border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.7rem; font-weight: 700; color: #fff; text-shadow: none;
+  background: linear-gradient(135deg, #a58bff, #6d4df0);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 10px 24px rgba(80, 50, 200, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+.lg-word { font-size: 1.7rem; font-weight: 700; color: #fff; letter-spacing: -0.01em; }
+.lg-word span { color: #ffd6ee; }
+
+.lg-chips { display: flex; justify-content: center; gap: 14px; margin: 2px 0 24px; }
+.lg-chip {
+  width: 66px; height: 66px; border-radius: 22px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.7rem; font-weight: 700; color: #fff;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0.12));
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 14px 30px rgba(50, 40, 120, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  animation: lg-bob 5s ease-in-out infinite;
+}
+.lg-chip.left { transform: rotate(-8deg); }
+.lg-chip.mid {
+  background: rgba(255, 255, 255, 0.92); color: #5b3fe0; text-shadow: none;
+  transform: translateY(-10px) rotate(-5deg); animation-delay: -1.6s;
+}
+.lg-chip.right { transform: rotate(8deg); animation-delay: -3.2s; }
+@keyframes lg-bob {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -7px; }
+}
+
+/* ---------- Headline ---------- */
+.lg-badge-wrap { text-align: center; margin-bottom: 14px; }
+.lg-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 7px 14px; border-radius: 999px;
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase;
+  color: #fff; background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+}
+.lg-badge::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: #fff; }
+
+.lg-title { text-align: center; font-size: 2.2rem; line-height: 1.18; font-weight: 500; letter-spacing: -0.015em; margin: 0 0 12px; color: #fff; }
+.lg-title .hl {
+  display: inline-block; padding-bottom: 2px; color: #fff; font-weight: 700;
+  border-bottom: 3px solid rgba(255, 255, 255, 0.75);
+}
+.lg-sub { text-align: center; color: rgba(255, 255, 255, 0.95); font-size: 1.1rem; line-height: 1.55; margin: 0 0 24px; }
+
+/* ---------- Inner glass card ---------- */
+.lg-glass {
+  position: relative;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.08));
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 30px;
+  padding: 22px;
+  margin-bottom: 18px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+.lg-glass h2 { margin: 0 0 10px; font-size: 1.4rem; font-weight: 700; color: #fff; }
+.lg-glass p { color: rgba(255, 255, 255, 0.96); font-size: 1.1rem; line-height: 1.55; margin: 0 0 10px; }
+.lg-glass label { display: block; font-weight: 700; color: #fff; }
+
+/* ---------- Fields and buttons ---------- */
+.lg-input {
+  width: 100%; min-height: 60px; margin-top: 12px; padding: 14px 22px;
+  border-radius: 999px; font-size: 1.2rem; font-family: inherit; text-shadow: none;
+  background: rgba(255, 255, 255, 0.9); color: #2a2260;
+  border: 1.5px solid #fff;
+  box-shadow: inset 0 2px 8px rgba(80, 60, 160, 0.12);
+}
+.lg-input:focus { outline: 3px solid rgba(255, 255, 255, 0.7); }
+.lg-error {
+  margin: 14px 0 0; padding: 12px 16px; border-radius: 18px;
+  background: rgba(176, 20, 56, 0.88); color: #fff; font-weight: 700;
+  font-size: 1rem; text-shadow: none;
+}
+
+.lg-btn {
+  display: block; width: 100%; min-height: 60px; margin-bottom: 14px;
+  padding: 16px 22px; border: none; border-radius: 999px;
+  font-family: inherit; font-size: 1.2rem; font-weight: 700; cursor: pointer;
+  background: #fff; color: #2a2260; text-shadow: none;
+  box-shadow: 0 14px 30px rgba(50, 40, 120, 0.28);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+.lg-btn:hover { transform: translateY(-1px); background: #f4efff; }
+.lg-btn:active { transform: translateY(0); }
+.lg-btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+.lg-btn.ghost {
+  background: rgba(255, 255, 255, 0.16); color: #fff;
+  border: 1.5px solid rgba(255, 255, 255, 0.7);
+  text-shadow: 0 1px 10px rgba(45, 35, 110, 0.3);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+.lg-btn.ghost:hover { background: rgba(255, 255, 255, 0.28); }
+.lg-back {
+  background: none; border: none; font-family: inherit; font-size: 1.1rem;
+  font-weight: 700; color: #fff; padding: 10px 0; cursor: pointer; text-align: left;
+  text-shadow: 0 1px 10px rgba(45, 35, 110, 0.3);
+}
+.lg-note {
+  text-align: center; font-size: 0.95rem; color: rgba(255, 255, 255, 0.95);
+  margin: 10px 0 0; padding-top: 14px; border-top: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lg-orb, .lg-chip, .lg-page > * { animation: none; }
+}
+
+/* ===== Horizontal layout (wide screens) ===== */
+body.glass-bg .app { max-width: 1160px; }
+
+@media (min-width: 900px) {
+  body.glass-bg .app { padding: 32px; }
+
+  .lg-page {
+    display: grid;
+    grid-template-columns: 1.25fr 1fr;
+    align-items: center;
+    padding: 56px;
+    border-radius: 48px;
+  }
+
+  .lg-left { padding-right: 48px; text-align: left; }
+  .lg-left .lg-logo,
+  .lg-left .lg-chips { justify-content: flex-start; }
+  .lg-left .lg-badge-wrap { text-align: left; }
+  .lg-left .lg-title { text-align: left; font-size: 2.7rem; }
+  .lg-chips { margin: 4px 0 28px; }
+
+  .lg-right {
+    padding-left: 48px;
+    border-left: 1px solid rgba(255, 255, 255, 0.35);
+  }
+  .lg-sub { text-align: left; }
+
+  .lg-sphere { width: 900px; height: 900px; }
+}
+
+.lg-error { animation: lg-shake 0.4s ease; }
+@keyframes lg-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-5px); }
+  80% { transform: translateX(5px); }
+}
+
+/* Show/hide eye inside the key box */
+.lg-field { position: relative; }
+.lg-field .lg-input { padding-right: 68px; }
+.lg-eye {
+  position: absolute; right: 8px; top: 42px; transform: translateY(-50%);
+  width: 46px; height: 46px; border: none; border-radius: 50%;
+  background: transparent; color: #5b3fe0; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; text-shadow: none;
+}
+.lg-eye:hover { background: rgba(109, 77, 240, 0.12); }
+.lg-eye svg { width: 24px; height: 24px; }
+
+/* Spacing so the messages never touch the input */
+.lg-glass .lg-error { margin: 18px 0 0; }
+.lg-glass .lg-demo {
+  margin: 14px 0 0; padding: 8px 12px; font-size: 0.9rem;
+  color: #fff; background: rgba(255, 255, 255, 0.18);
+  border: 1px dashed rgba(255, 255, 255, 0.65); border-radius: 14px;
+}

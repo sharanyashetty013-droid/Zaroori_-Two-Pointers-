@@ -1,19 +1,37 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
+import { useAuth } from './AuthContext'
+import Login from './pages/Login'
 import LanguagePicker from './pages/LanguagePicker'
+import Hospital from './pages/Hospital'
 import Questions from './pages/Questions'
 import Result from './pages/Result'
 import Alert from './pages/Alert'
-import Dashboard from './pages/Dashboard'
+import Neutral from './pages/Neutral'
+import QuickExit from './components/QuickExit'
+import Header from './components/Header'
+
+function RequireAuth({ children }) {
+  const { asha } = useAuth()
+  return asha ? children : <Navigate to="/" replace />
+}
+
+const NO_QUICK_EXIT = ['/', '/language', '/neutral']
+const NO_HEADER = ['/', '/alert', '/neutral']
 
 export default function App() {
+  const { pathname } = useLocation()
   return (
     <div className="app">
+      {!NO_HEADER.includes(pathname) && <Header />}
+      {!NO_QUICK_EXIT.includes(pathname) && <QuickExit />}
       <Routes>
-        <Route path="/" element={<LanguagePicker />} />
-        <Route path="/questions" element={<Questions />} />
-        <Route path="/result" element={<Result />} />
-        <Route path="/alert" element={<Alert />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/language" element={<RequireAuth><LanguagePicker /></RequireAuth>} />
+        <Route path="/hospital" element={<RequireAuth><Hospital /></RequireAuth>} />
+        <Route path="/questions" element={<RequireAuth><Questions /></RequireAuth>} />
+        <Route path="/result" element={<RequireAuth><Result /></RequireAuth>} />
+        <Route path="/alert" element={<RequireAuth><Alert /></RequireAuth>} />
+        <Route path="/neutral" element={<Neutral />} />
       </Routes>
     </div>
   )
