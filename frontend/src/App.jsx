@@ -27,6 +27,7 @@ export default function App() {
       {!NO_QUICK_EXIT.includes(pathname) && <QuickExit />}
       <Routes>
         <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/language" element={<RequireAuth><LanguagePicker /></RequireAuth>} />
         <Route path="/hospital" element={<RequireAuth><Hospital /></RequireAuth>} />
         <Route path="/questions" element={<RequireAuth><Questions /></RequireAuth>} />
