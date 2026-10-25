@@ -72,3 +72,23 @@ h2 { font-size: 1.3rem; margin: 0 0 10px; }
   font-family: inherit; background: var(--bg); color: var(--text);
   border: 1px solid var(--card-border);
 }
+
+body.alert-bg { background: #8b1028; }
+.alert-card {
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 24px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.alert-card p { color: #ffe3e8; }
+.rights-list { margin: 0; padding-left: 22px; line-height: 1.6; font-size: 1.15rem; }
+.rights-list li { margin-bottom: 8px; }
+.btn-big.call {
+  display: flex; justify-content: space-between; align-items: center;
+  text-decoration: none; font-size: 1.2rem; gap: 12px;
+}
+.call-label { text-align: left; }
+.btn-outline { background: transparent; color: #fff; border: 2px solid #fff; }
+.btn-outline:hover { background: rgba(255, 255, 255, 0.15); }
+.done { font-size: 1.2rem; font-weight: 700; color: #fff; }
