@@ -134,6 +134,9 @@ export default function Login() {
         <button className="lg-btn ghost" onClick={() => setMode('nokey')}>
           I don't have an ASHA key
         </button>
+        <button className="lg-back" onClick={() => navigate('/officials')}>
+          I'm a health official →
+        </button>
       </>
     )
   } else if (mode === 'nokey') {
