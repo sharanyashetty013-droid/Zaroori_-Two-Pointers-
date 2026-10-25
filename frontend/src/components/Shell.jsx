@@ -63,7 +63,7 @@ export default function Shell({ title, step, tiles = false, exit = true, guide, 
   return (
     <div className="sh-frame">
       <aside className="sh-side">
-        <div className="sh-brand">
+        <div className="sh-brand" onClick={() => window.location.assign('/landing.html')} style={{ cursor: 'pointer' }}>
           <div className="sh-logo">?</div>
           <div className="sh-word">Zaroori<span>?</span></div>
         </div>
@@ -101,7 +101,7 @@ export default function Shell({ title, step, tiles = false, exit = true, guide, 
       <main className="sh-main">
         <div className="sh-top">
           <div className="sh-top-row">
-            <div className="sh-brand sh-brand-m">
+            <div className="sh-brand sh-brand-m" onClick={() => window.location.assign('/landing.html')} style={{ cursor: 'pointer' }}>
               <div className="sh-logo">?</div>
               <div className="sh-word">Zaroori<span>?</span></div>
             </div>
@@ -123,12 +123,6 @@ export default function Shell({ title, step, tiles = false, exit = true, guide, 
                   </button>
                 ))}
               </div>
-              {exit && (
-                <button className="sh-exit" onClick={quickExit} aria-label={t('exit')}>
-                  <Icon d="M18 6L6 18M6 6l12 12" />
-                  {t('exit')}
-                </button>
-              )}
             </div>
           </div>
         </div>
@@ -160,15 +154,6 @@ export default function Shell({ title, step, tiles = false, exit = true, guide, 
                 <div className="sh-tile-value">{asha?.district}</div>
               </div>
             </div>
-            {current >= 0 && (
-              <div className="sh-tile blue">
-                <div className="sh-tile-icon"><Ring value={current + 1} total={STEPS.length} /></div>
-                <div>
-                  <div className="sh-tile-label">{t(STEPS[current].label)}</div>
-                  <div className="sh-tile-value">{current + 1} / {STEPS.length}</div>
-                </div>
-              </div>
-            )}
           </div>
         )}
 
