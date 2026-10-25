@@ -1,100 +1,184 @@
-import { useState, useEffect } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { useLanguage } from '../LanguageContext'
-import { ALERT, HELPLINES } from '../data/alert'
+import { ALERT_TEXT, HELPLINES, spokenDigits } from '../data/alertText'
+import { postAlert } from '../api'
 import { speak } from '../speak'
+
+const LANGS = [
+  { code: 'en', label: 'EN' },
+  { code: 'hi', label: 'हि' },
+  { code: 'kn', label: 'ಕ' },
+]
+
+function Icon({ d }) {
+  return (
+    <svg className="rd-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d={d} />
+    </svg>
+  )
+}
 
 export default function Alert() {
   const { state } = useLocation()
   const navigate = useNavigate()
-  const { lang } = useLanguage()
-  const [consent, setConsent] = useState(null) // null | 'yes' | 'no'
+  const { lang, setLang } = useLanguage()
+  const a = ALERT_TEXT[lang]
   const answers = state?.answers
+  const hospitalId = state?.hospitalId ?? null
+  const slipCode = state?.slipCode ?? ''
 
-  const spoken = [
-    ALERT.headline[lang],
-    ALERT.body[lang],
-    ALERT.rightsTitle[lang],
-    ...ALERT.rights.map((r) => r[lang]),
-    ALERT.consentTitle[lang],
-  ].join('. ')
+  const [view, setView] = useState('rights') // rights | consent | done
+  const [sending, setSending] = useState(false)
+  const [failed, setFailed] = useState(false)
+  const [sentCode, setSentCode] = useState('')
 
   useEffect(() => {
-    if (!answers) {
-      navigate('/')
-      return
-    }
-    document.body.classList.add('alert-bg')
-    speak(spoken, lang)
+    document.body.classList.add('rd-bg')
     return () => {
-      document.body.classList.remove('alert-bg')
-      window.speechSynthesis.cancel()
+      document.body.classList.remove('rd-bg')
+      window.speechSynthesis?.cancel()
     }
   }, [])
 
-  function answerConsent(value) {
-    setConsent(value)
-    if (value === 'yes') {
-      // TODO (feature/connect-backend): send an anonymous case to the backend here.
-      // Send only answers + hospital + district. NEVER a name or phone number.
-      console.log('Case to send (no name):', answers)
+  if (!answers) return <Navigate to="/language" replace />
+
+  const rights = [a.r1, a.r2, a.r3, a.r4]
+  const spokenRights = [
+    a.headline,
+    a.body,
+    a.rightsTitle,
+    ...rights,
+    a.helpTitle,
+    ...HELPLINES.map((h) => a[h.key] + ': ' + spokenDigits(h.number, lang)),
+  ].join('. ')
+
+  async function send() {
+    if (sending) return
+    setSending(true)
+    setFailed(false)
+    try {
+      const res = await postAlert(slipCode)
+      setSentCode(res?.slip_code ?? slipCode)
+      setView('done')
+    } catch {
+      setFailed(true)
+    } finally {
+      setSending(false)
     }
   }
 
-  if (!answers) return null
+  function quickExit() {
+    window.location.replace('/neutral')
+  }
+
+  const listenBtn = (text) => (
+    <button className="rd-listen" onClick={() => speak(text, lang)}>
+      <Icon d="M11 5L6 9H3v6h3l5 4zM15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13" />
+      {a.listen}
+    </button>
+  )
 
   return (
-    <div>
-      <div className="alert-card">
-        <h1>{ALERT.headline[lang]}</h1>
-        <p>{ALERT.body[lang]}</p>
-        <button className="btn-big" onClick={() => speak(spoken, lang)}>
-          🔊 {ALERT.listen[lang]}
+    <div className="rd-page">
+      <div className="rd-top">
+        <div className="rd-langs">
+          {LANGS.map((l) => (
+            <button key={l.code} className={lang === l.code ? 'on' : ''} onClick={() => setLang(l.code)}>
+              {l.label}
+            </button>
+          ))}
+        </div>
+        <button className="rd-exit" onClick={quickExit}>
+          <Icon d="M18 6L6 18M6 6l12 12" />
+          Exit
         </button>
       </div>
 
-      <div className="alert-card">
-        <h2>{ALERT.rightsTitle[lang]}</h2>
-        <ul className="rights-list">
-          {ALERT.rights.map((r, i) => (
-            <li key={i}>{r[lang]}</li>
-          ))}
-        </ul>
-      </div>
+      {view === 'rights' && (
+        <>
+          <h1 className="rd-title">{a.headline}</h1>
+          <p className="rd-lead">{a.body}</p>
+          {listenBtn(spokenRights)}
 
-      <div className="alert-card">
-        <h2>📞 {ALERT.helpTitle[lang]}</h2>
-        {HELPLINES.map((h) => (
-          <a key={h.number} className="btn-big call" href={`tel:${h.number}`}>
-            <span className="call-label">{h.label[lang]}</span>
-            <span>{h.number}</span>
-          </a>
-        ))}
-      </div>
+          <div className="rd-box">
+            <h2>{a.rightsTitle}</h2>
+            <ul className="rd-list">
+              {rights.map((r) => (
+                <li key={r}>{r}</li>
+              ))}
+            </ul>
+          </div>
 
-      <div className="alert-card">
-        <h2>{ALERT.consentTitle[lang]}</h2>
-        <p>{ALERT.consentNote[lang]}</p>
-        {consent === null && (
-          <>
-            <button className="btn-big" onClick={() => answerConsent('yes')}>
-              {ALERT.yes[lang]}
+          <div className="rd-box">
+            <h2>{a.helpTitle}</h2>
+            {HELPLINES.map((h) => (
+              <a key={h.number} className="rd-call" href={'tel:' + h.number}>
+                <span>
+                  <Icon d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z" />
+                  {a[h.key]}
+                </span>
+                <strong>{h.number}</strong>
+              </a>
+            ))}
+          </div>
+
+          <div className="rd-note">
+            <strong>ASHA</strong>
+            <p>{a.guideRights}</p>
+          </div>
+
+          <button className="rd-btn ghost" onClick={() => setView('consent')}>
+            {a.toConsent}
+          </button>
+          <button
+            className="rd-link"
+            onClick={() => navigate('/result', { state: { answers, hospitalId, slipCode } })}
+          >
+            &#8592; {a.backResult}
+          </button>
+        </>
+      )}
+
+      {view === 'consent' && (
+        <>
+          <h1 className="rd-title">{a.consentTitle}</h1>
+          <p className="rd-lead">{a.consentQ}</p>
+          {listenBtn(a.consentQ)}
+
+          {failed && <div className="rd-fail">{a.failed}</div>}
+
+          <div className="rd-choices">
+            <button className="rd-choice" disabled={sending} onClick={send}>
+              {sending ? a.sending : failed ? a.retry : a.yes}
             </button>
-            <button className="btn-big btn-outline" onClick={() => answerConsent('no')}>
-              {ALERT.no[lang]}
+            <button className="rd-choice" disabled={sending} onClick={() => setView('rights')}>
+              {a.no}
             </button>
-          </>
-        )}
-        {consent === 'yes' && <p className="done">✅ {ALERT.sent[lang]}</p>}
-        {consent === 'no' && <p className="done">{ALERT.declined[lang]}</p>}
-      </div>
+          </div>
 
-      <button
-        className="btn-big btn-outline"
-        onClick={() => navigate('/result', { state: { answers } })}
-      >
-        {ALERT.plan[lang]}
-      </button>
+          <div className="rd-note">
+            <strong>ASHA</strong>
+            <p>{a.guideConsent}</p>
+          </div>
+        </>
+      )}
+
+      {view === 'done' && (
+        <>
+          <h1 className="rd-title">{a.sentTitle}</h1>
+          <p className="rd-lead">{a.sentBody}</p>
+          <div className="rd-box">
+            <div className="rd-code-label">{a.codeLabel}</div>
+            <div className="rd-code">{sentCode}</div>
+            <p>{a.codeNote}</p>
+          </div>
+          <button className="rd-btn" onClick={() => navigate('/language', { replace: true })}>
+            {a.finish}
+          </button>
+        </>
+      )}
     </div>
   )
 }

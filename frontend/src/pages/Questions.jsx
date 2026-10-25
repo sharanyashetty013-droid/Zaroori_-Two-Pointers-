@@ -29,9 +29,7 @@ export default function Questions() {
     if (index < QUESTIONS.length - 1) {
       setIndex(index + 1)
     } else {
-      navigate(next.pressure === 'yes' ? '/alert' : '/result', {
-        state: { answers: next, hospitalId },
-      })
+            navigate('/result', { state: { answers: next, hospitalId } })
     }
   }
 

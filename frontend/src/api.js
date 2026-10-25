@@ -62,3 +62,14 @@ export async function getHospitals(district) {
   }
   return request('/hospitals?district=' + encodeURIComponent(district))
 }
+
+export async function postAlert(slipCode) {
+  if (DEMO) {
+    await wait(700)
+    return { slip_code: slipCode }
+  }
+  // TODO: send POST /alerts with the session id and consent true once the
+  // API docs are known. Until then this fails on purpose, so the screen never
+  // claims an alert was sent when it was not.
+  throw new ApiError(-1, 'Alert endpoint not connected yet')
+}

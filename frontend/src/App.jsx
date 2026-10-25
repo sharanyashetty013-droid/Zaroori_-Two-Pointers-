@@ -15,8 +15,8 @@ function RequireAuth({ children }) {
   return asha ? children : <Navigate to="/" replace />
 }
 
-const NO_QUICK_EXIT = ['/', '/language','/hospital','/questions', '/neutral']
-const NO_HEADER = ['/','/language','/hospital','/questions', '/alert', '/neutral']
+const NO_QUICK_EXIT = ['/', '/language','/hospital','/questions','/result', '/alert','/neutral']
+const NO_HEADER = ['/','/language','/hospital','/questions','/result', '/alert', '/neutral']
 
 export default function App() {
   const { pathname } = useLocation()
