@@ -134,7 +134,7 @@ flowchart LR
 |---|---|
 | 🎨 Frontend | React + Vite + Tailwind, installable **PWA** with offline queue |
 | 🌌 Landing page | Three.js 3D hero, glass UI, language switcher ✅ *(in this repo)* |
-| ⚙️ Backend | FastAPI (or Node/Express) + PostgreSQL on Render / Railway |
+| ⚙️ Backend | FastAPI (or Node/Express) + PostgreSQL on Render |
 | 🔊 Voice | Text-to-speech in Hindi, Kannada, English |
 | 🗺️ Map | Leaflet or MapLibre + district GeoJSON + NFHS indicators |
 
