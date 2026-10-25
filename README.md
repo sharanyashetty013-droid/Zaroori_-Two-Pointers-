@@ -119,12 +119,12 @@ flowchart LR
 
 | # | Principle |
 |---|---|
-| 1 | 🚫 **We never diagnose.** |
-| 2 | 🚫 **We never say "you don't need surgery."** Every generated line is checked against a blocklist. |
-| 3 | 🔒 **No names, phone numbers or Aadhaar are ever stored.** |
-| 4 | ⚖️ **Coercion detection is rule-based**, not a black-box model. |
-| 5 | 🔎 **Hospital flags are a prompt to check, not an accusation.** Reviewed first, never shown publicly. |
-| 6 | ✍️ **AI drafts, a person verifies.** All translations are human-reviewed. |
+| 1 | **We never diagnose.** |
+| 2 | **We never say "you don't need surgery."** Every generated line is checked against a blocklist. |
+| 3 | **No names, phone numbers or Aadhaar are ever stored.** |
+| 4 | **Coercion detection is rule-based**, not a black-box model. |
+| 5 | **Hospital flags are a prompt to check, not an accusation.** Reviewed first, never shown publicly. |
+| 6 | **AI drafts, a person verifies.** All translations are human-reviewed. |
 
 ---
 
