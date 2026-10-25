@@ -1,8 +1,11 @@
-const BASE = import.meta.env.VITE_API_URL
+// Real backend only. In dev it talks to the local API; in a production build
+// set VITE_API_URL to the deployed backend address.
+export const BASE =
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.DEV ? 'http://127.0.0.1:8000' : '')
 
-// Demo mode: only while developing (npm run dev) with no real address,
-// or when VITE_API_URL=demo. A production build never turns it on by itself.
-export const DEMO = BASE === 'demo' || (!BASE && import.meta.env.DEV)
+// Kept so older imports (Login.jsx) keep working. Demo mode is gone.
+export const DEMO = false
 
 export class ApiError extends Error {
   constructor(status, message) {
@@ -38,38 +41,37 @@ async function request(path, options = {}) {
   }
 }
 
-// ---- Demo mode ----
-const wait = (ms) => new Promise((r) => setTimeout(r, ms))
+const post = (path, body) =>
+  request(path, { method: 'POST', body: JSON.stringify(body) })
 
-export async function getMe() {
-  if (DEMO) {
-    await wait(400)
-    if ((ashaKey || '').trim().toLowerCase() !== 'asha-demo')
-      throw new ApiError(401, 'Wrong key')
-    return { asha_code: 'DEMO-001', district: 'Demo District' }
-  }
-  return request('/asha/me')
-}
+// Login check: returns { code, district, login_required }
+export const getMe = () => request('/asha/me')
 
-export async function getHospitals(district) {
-  if (DEMO) {
-    await wait(300)
-    return [
-      { id: 'h1', name: 'DEMO Hospital A' },
-      { id: 'h2', name: 'DEMO Hospital B' },
-      { id: 'h3', name: 'DEMO Hospital C' },
-    ]
-  }
-  return request('/hospitals?district=' + encodeURIComponent(district))
-}
+export const getHospitals = (district) =>
+  request('/hospitals?district=' + encodeURIComponent(district))
 
-export async function postAlert(slipCode) {
-  if (DEMO) {
-    await wait(700)
-    return { slip_code: slipCode }
-  }
-  // TODO: send POST /alerts with the session id and consent true once the
-  // API docs are known. Until then this fails on purpose, so the screen never
-  // claims an alert was sent when it was not.
-  throw new ApiError(-1, 'Alert endpoint not connected yet')
-}
+// [{ id, text, options: [{ value, label }] }] in the chosen language
+export const getQuestions = (lang) =>
+  request('/questions?lang=' + encodeURIComponent(lang))
+
+// -> { session_id }. The district comes from the ASHA's own account.
+export const startSession = (lang, hospitalId) =>
+  post('/sessions', {
+    lang,
+    ...(hospitalId != null ? { hospital_id: hospitalId } : {}),
+  })
+
+// answers: { [questionId]: optionValue } -> full result (headline, AI questions, hospitals, alert)
+export const submitAnswers = (sid, answers) =>
+  post(`/sessions/${sid}/answers`, { answers })
+
+export const getResult = (sid, lang) =>
+  request(`/sessions/${sid}/result?lang=${encodeURIComponent(lang)}`)
+
+// Direct link to the PDF slip
+export const slipUrl = (sid, lang) =>
+  `${BASE}/sessions/${sid}/slip.pdf?lang=${encodeURIComponent(lang)}`
+
+// Sends the alert for a session (the woman has already said yes on screen)
+export const postAlert = (sessionId) =>
+  post('/alerts', { session_id: sessionId, consent: true })

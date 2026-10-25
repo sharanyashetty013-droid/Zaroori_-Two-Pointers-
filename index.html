@@ -265,7 +265,7 @@ radial-gradient(circle 420px at 28% 90%,rgba(110,90,240,.14),transparent 70%)}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-const CONSOLE_URL="#"; // put your frontend console link here
+const CONSOLE_URL="http://localhost:5173/"; // use the hosted console URL once deployed
 const $=s=>document.querySelector(s),clamp=(x,a,b)=>Math.min(b,Math.max(a,x)),lerp=(a,b,k)=>a+(b-a)*k;
 const ss=(a,b,x)=>{x=clamp((x-a)/(b-a),0,1);return x*x*(3-2*x)},trap=(t,a,b,c,d)=>ss(a,b,t)*(1-ss(c,d,t));
 const RM=matchMedia('(prefers-reduced-motion:reduce)').matches;

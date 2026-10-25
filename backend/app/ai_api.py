@@ -36,7 +36,7 @@ def extract(b: ExtractIn, db: Session = Depends(get_db)):
 
 @router.get("/tts")
 def speak(text: str, lang: Lang = "en"):
-    if not text.strip() or len(text) > 400: raise HTTPException(400, "text must be 1 to 400 characters")
+    if not text.strip() or len(text) > 1200: raise HTTPException(400, "text must be 1 to 1200 characters")
     try: return Response(tts.speak(text, lang), media_type="audio/mpeg", headers={"Cache-Control": "public, max-age=86400"})
     except Exception: raise HTTPException(503, "voice service unavailable; use the device voice instead")
 

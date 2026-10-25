@@ -3,7 +3,7 @@ import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { useLanguage } from '../LanguageContext'
 import { ALERT_TEXT, HELPLINES, spokenDigits } from '../data/alertText'
 import { postAlert } from '../api'
-import { speak } from '../speak'
+import { speak, stopSpeaking } from '../speak'
 
 const LANGS = [
   { code: 'en', label: 'EN' },
@@ -28,6 +28,7 @@ export default function Alert() {
   const answers = state?.answers
   const hospitalId = state?.hospitalId ?? null
   const slipCode = state?.slipCode ?? ''
+  const sessionId = state?.sessionId ?? ''
 
   const [view, setView] = useState('rights') // rights | consent | done
   const [sending, setSending] = useState(false)
@@ -38,7 +39,7 @@ export default function Alert() {
     document.body.classList.add('rd-bg')
     return () => {
       document.body.classList.remove('rd-bg')
-      window.speechSynthesis?.cancel()
+      stopSpeaking()
     }
   }, [])
 
@@ -59,7 +60,7 @@ export default function Alert() {
     setSending(true)
     setFailed(false)
     try {
-      const res = await postAlert(slipCode)
+      const res = await postAlert(sessionId)
       setSentCode(res?.slip_code ?? slipCode)
       setView('done')
     } catch {
@@ -74,7 +75,7 @@ export default function Alert() {
   }
 
   const listenBtn = (text) => (
-    <button className="rd-listen" onClick={() => speak(text, lang)}>
+    <button className="rd-listen" onClick={() => speak(text, lang, sessionId ? `/tts/alert/${sessionId}?lang=${lang}` : undefined)}>
       <Icon d="M11 5L6 9H3v6h3l5 4zM15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13" />
       {a.listen}
     </button>

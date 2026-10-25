@@ -2,34 +2,53 @@ import { useEffect, useState } from 'react'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { useLanguage } from '../LanguageContext'
 import { RESULT_TEXT } from '../data/resultText'
-import { speak } from '../speak'
+import { getResult, slipUrl } from '../api'
+import { speak, stopSpeaking } from '../speak'
 import Shell from '../components/Shell'
+
+// The AI may return plain strings or objects; show either.
+const asText = (x) => (typeof x === 'string' ? x : x?.text ?? x?.question ?? '')
 
 export default function Result() {
   const { state } = useLocation()
   const navigate = useNavigate()
   const { lang } = useLanguage()
   const r = RESULT_TEXT[lang]
-  const answers = state?.answers
-  const hospitalId = state?.hospitalId ?? null
+  const [res, setRes] = useState(state?.result ?? null)
+  const sid = state?.result?.session_id
 
-  // Demo only: the real slip code will come from the backend.
-  const [slipCode] = useState(
-       () => state?.slipCode ?? 'ZR-' + Math.random().toString(36).slice(2, 6).toUpperCase()
-  )
+  // Reload the result in the new language when the language button is used
+  useEffect(() => {
+    if (!sid) return
+    let off = false
+    getResult(sid, lang)
+      .then((x) => !off && setRes(x))
+      .catch(() => {})
+    return () => {
+      off = true
+    }
+  }, [sid, lang])
 
-  const asks = [r.ask1, r.ask2, r.ask3, r.ask4, r.ask5]
-  const spoken = [r.headline, r.body, r.askTitle, ...asks, r.visitTitle, r.hospA, r.hospB, r.notDiagnosis].join('. ')
+  useEffect(() => () => stopSpeaking(), [])
 
-  useEffect(() => () => window.speechSynthesis?.cancel(), [])
+  if (!res) return <Navigate to="/language" replace />
 
-  if (!answers) return <Navigate to="/language" replace />
+  const asks = (res.doctor_questions ?? []).map(asText).filter(Boolean)
+  const hospitals = res.hospitals ?? []
+  const slipCode = res.session_id.slice(0, 8).toUpperCase()
+  const spoken = [
+    res.headline,
+    res.note,
+    ...(asks.length ? [r.askTitle, ...asks] : []),
+    ...(hospitals.length ? [r.visitTitle, ...hospitals.map((h) => h.name)] : []),
+    r.notDiagnosis,
+  ].join('. ')
 
   return (
-    <Shell title={r.headline} step="result" guide={r.guide}>
+    <Shell title={res.headline} step="result" guide={r.guide}>
       <div className="sh-card">
-        <p>{r.body}</p>
-        <button className="sh-listen" onClick={() => speak(spoken, lang)}>
+        <p>{res.note}</p>
+        <button className="sh-listen" onClick={() => speak(spoken, lang, `/tts/result/${res.session_id}?lang=${lang}`)}>
           <svg className="sh-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
             strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <path d="M11 5L6 9H3v6h3l5 4zM15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13" />
@@ -38,22 +57,27 @@ export default function Result() {
         </button>
       </div>
 
-      <div className="sh-card">
-        <h2>{r.askTitle}</h2>
-        <ol className="sh-list">
-          {asks.map((a, i) => (
-            <li key={i}>{a}</li>
-          ))}
-        </ol>
-      </div>
+      {asks.length > 0 && (
+        <div className="sh-card">
+          <h2>{r.askTitle}</h2>
+          <ol className="sh-list">
+            {asks.map((a, i) => (
+              <li key={i}>{a}</li>
+            ))}
+          </ol>
+        </div>
+      )}
 
-      <div className="sh-card">
-        <h2>{r.visitTitle}</h2>
-        <ul className="sh-list">
-          <li>{r.hospA}</li>
-          <li>{r.hospB}</li>
-        </ul>
-      </div>
+      {hospitals.length > 0 && (
+        <div className="sh-card">
+          <h2>{r.visitTitle}</h2>
+          <ul className="sh-list">
+            {hospitals.map((h) => (
+              <li key={h.id}>{h.name}</li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       <div className="sh-slip">
         <div className="sh-slip-title">{r.slipTitle}</div>
@@ -65,15 +89,25 @@ export default function Result() {
       </div>
 
       <div className="sh-stack">
-        {/* Demo: prints the slip. Later this will download GET /sessions/{id}/slip.pdf */}
-        <button className="sh-btn" onClick={() => window.print()}>
-          {r.slipDownload}
-        </button>
+        {res.completed && (
+          <button className="sh-btn" onClick={() => window.open(slipUrl(res.session_id, lang), '_blank')}>
+            {r.slipDownload}
+          </button>
+        )}
 
-        {answers.pressure === 'yes' && (
+        {res.coercion && (
           <button
             className="sh-btn ghost"
-           onClick={() => navigate('/alert', { state: { answers, hospitalId, slipCode } })}
+            onClick={() =>
+              navigate('/alert', {
+                state: {
+                  answers: state?.answers ?? {},
+                  hospitalId: state?.hospitalId ?? null,
+                  slipCode,
+                  sessionId: res.session_id,
+                },
+              })
+            }
           >
             {r.helpBtn}
           </button>

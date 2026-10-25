@@ -16,10 +16,11 @@ function browserSpeak(text, lang) {
   window.speechSynthesis.speak(u)
 }
 
-export async function speak(text, lang) {
+export async function speak(text, lang, path) {
   stopSpeaking()
   try {
-    const res = await fetch(`${BASE}/tts?text=${encodeURIComponent(text)}&lang=${lang}`)
+    const url0 = BASE + (path || `/tts?text=${encodeURIComponent(text)}&lang=${lang}`)
+    const res = await fetch(url0)
     if (!res.ok) throw new Error('tts ' + res.status)
     const url = URL.createObjectURL(await res.blob())
     current = new Audio(url)

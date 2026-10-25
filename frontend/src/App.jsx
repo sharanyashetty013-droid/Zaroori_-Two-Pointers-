@@ -7,6 +7,7 @@ import Questions from './pages/Questions'
 import Result from './pages/Result'
 import Alert from './pages/Alert'
 import Neutral from './pages/Neutral'
+import Officials from './pages/Officials'
 import QuickExit from './components/QuickExit'
 import Header from './components/Header'
 
@@ -15,8 +16,8 @@ function RequireAuth({ children }) {
   return asha ? children : <Navigate to="/" replace />
 }
 
-const NO_QUICK_EXIT = ['/', '/language','/hospital','/questions','/result', '/alert','/neutral']
-const NO_HEADER = ['/','/language','/hospital','/questions','/result', '/alert', '/neutral']
+const NO_QUICK_EXIT = ['/', '/language','/hospital','/questions','/result', '/alert','/neutral','/officials']
+const NO_HEADER = ['/','/language','/hospital','/questions','/result', '/alert', '/neutral','/officials']
 
 export default function App() {
   const { pathname } = useLocation()
@@ -32,6 +33,7 @@ export default function App() {
         <Route path="/result" element={<RequireAuth><Result /></RequireAuth>} />
         <Route path="/alert" element={<RequireAuth><Alert /></RequireAuth>} />
         <Route path="/neutral" element={<Neutral />} />
+        <Route path="/officials" element={<Officials />} />
       </Routes>
     </div>
   )

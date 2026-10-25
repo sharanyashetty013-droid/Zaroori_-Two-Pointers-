@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Zaroori? Ask once more before a big decision</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='15' fill='%236b4df0'/%3E%3Cpath d='M17 18C17 13 20.5 10 24.5 10 28.8 10 31.5 12.8 31.5 16.5 31.5 20 29 21.4 26.8 23 25 24.3 24 25.4 24 28' fill='none' stroke='%23fff' stroke-width='4.6' stroke-linecap='round'/%3E%3Ccircle cx='24' cy='35.5' r='3' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Noto+Sans+Kannada:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f6f8;--bg1:#f6f6f8;--bg2:#f6f6f8;--ink:#111114;--mut:#5c5c68;--acc:#5b3fd6;--glint:#7c6cf0;--card:#fff;--tile:#f3f3f6;--hd:rgba(255,255,255,.9);--line:rgba(20,16,60,.08);
+  --sh:0 1px 2px rgba(20,16,60,.04),0 14px 34px rgba(20,16,60,.06);--sc:#111114;--btn:#111114;--btnt:#fff;
+  --serif:'Space Grotesk','Noto Sans Devanagari','Noto Sans Kannada',system-ui,sans-serif;--sans:'Inter','Noto Sans Devanagari','Noto Sans Kannada',system-ui,sans-serif;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f0d24;--bg1:#0f0d24;--bg2:#17133a;--ink:#f3f1ff;--mut:#b6b2d6;--acc:#c4b0ff;--glint:#fff;--card:rgba(36,30,92,.82);--tile:rgba(255,255,255,.06);--hd:rgba(30,24,80,.78);--line:rgba(190,170,255,.18);--sh:0 14px 34px rgba(0,0,0,.3);--sc:#fff;--btn:#fff;--btnt:#111114}}
+:root[data-theme="dark"]{--bg:#0f0d24;--bg1:#0f0d24;--bg2:#17133a;--ink:#f3f1ff;--mut:#b6b2d6;--acc:#c4b0ff;--glint:#fff;--card:rgba(36,30,92,.82);--tile:rgba(255,255,255,.06);--hd:rgba(30,24,80,.78);--line:rgba(190,170,255,.18);--sh:0 14px 34px rgba(0,0,0,.3);--sc:#fff;--btn:#fff;--btnt:#111114}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);color:var(--ink);background:radial-gradient(1000px circle at 8% -6%,rgba(130,120,255,.14),transparent 60%) fixed,var(--bg);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body.lock{overflow:hidden}
+a{color:inherit;text-decoration:none}
+#gl{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+:focus-visible{outline:3px solid var(--acc);outline-offset:3px}
+/* header */
+header{position:fixed;z-index:50;top:calc(14px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);width:min(1240px,calc(100% - 28px));display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 12px 10px 22px;border-radius:999px;background:var(--hd);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border:1px solid var(--line);box-shadow:var(--sh)}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-weight:600;font-size:22px;letter-spacing:-.02em}
+.logo i{width:34px;height:34px;border-radius:50%;background:var(--btn);color:var(--btnt);display:grid;place-items:center;font:600 18px/1 var(--sans)}
+.logo b{color:var(--acc)}
+.logo i.mk{width:40px;height:40px;border-radius:13px;background:none;display:block;box-shadow:0 8px 18px rgba(80,50,220,.35)}
+.logo i.mk svg{display:block}
+.lge{animation:lge 3.4s ease-in-out infinite}
+@keyframes lge{0%,100%{transform:translate(-4px,4px);opacity:.5}50%{transform:translate(-7.5px,7.5px);opacity:.12}}
+@media (prefers-reduced-motion:reduce){.lge{animation:none;transform:translate(-4px,4px);opacity:.4}}
+nav{display:flex;gap:30px;font-weight:500;font-size:15px;color:var(--mut)}
+nav a:hover{color:var(--ink)}
+.lang{display:flex;gap:2px;padding:3px;border-radius:999px;border:1px solid var(--line);font-size:13px}
+.lang button{border:0;background:none;color:var(--mut);font:inherit;padding:6px 12px;border-radius:999px;cursor:pointer}
+.lang button.on{background:var(--btn);color:var(--btnt);font-weight:600}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:999px;font-weight:600;font-size:16px;background:var(--btn);color:var(--btnt);box-shadow:0 10px 26px rgba(17,17,20,.22);transition:transform .2s,opacity .2s}
+.btn:hover{transform:translateY(-2px);opacity:.92}
+header .btn{padding:11px 22px;font-size:14px;box-shadow:none}
+.btn.ghost{background:var(--card);color:var(--ink);border:1px solid var(--line);box-shadow:var(--sh)}
+/* hero */
+#hero{position:relative;z-index:1;height:100vh;display:flex;flex-direction:column;align-items:center;text-align:center;padding:clamp(110px,16vh,160px) 24px 0}
+.pill{display:inline-flex;gap:10px;align-items:center;padding:9px 18px;border-radius:999px;background:var(--card);border:1px solid var(--line);font-weight:600;font-size:14px;color:var(--acc);box-shadow:var(--sh)}
+.pill::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--acc)}
+h1{font-family:var(--serif);font-size:clamp(34px,5.2vw,76px);line-height:1.12;letter-spacing:-.035em;font-weight:600;max-width:none;margin:26px 0 22px}
+.w{display:inline-block;opacity:0;filter:blur(12px);transform:translateY(.35em);color:#a8a2d0;transition:opacity .8s,filter .8s,transform .8s,color 1s;transition-delay:var(--d),var(--d),var(--d),calc(var(--d) + .4s);
+  -webkit-background-clip:text;background-clip:text;background-image:linear-gradient(105deg,var(--ink) 0%,var(--ink) 38%,var(--glint) 50%,var(--ink) 62%,var(--ink) 100%);background-size:300% 100%;background-position:100% 0}
+.on .w{opacity:1;filter:none;transform:none;color:transparent;-webkit-text-fill-color:transparent;animation:glint 6.5s ease-in-out calc(1.8s + var(--d)*2.5) infinite}
+@keyframes glint{0%,50%{background-position:100% 0}100%{background-position:0% 0}}
+.hl{position:relative;display:inline-flex;gap:.26em;padding:0 .04em .1em;margin:0 .06em}
+.hl::after{content:"";position:absolute;left:.04em;right:.04em;bottom:.01em;height:.07em;border-radius:99px;background:linear-gradient(90deg,var(--acc),var(--glint));transform-origin:left;transform:scaleX(0);transition:transform .9s cubic-bezier(.2,.7,.2,1) 1.2s}
+.on .hl::after{transform:scaleX(1)}
+.hl .w{background-image:linear-gradient(105deg,var(--acc) 0%,var(--acc) 38%,var(--glint) 50%,var(--acc) 62%,var(--acc) 100%)}
+.sub{max-width:54ch;font-size:clamp(15px,1.3vw,18px);line-height:1.6;color:var(--mut);padding:14px 28px;border-radius:30px;background:var(--card);border:1px solid var(--line);box-shadow:var(--sh)}
+.ctas{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:30px}
+.pill,.sub,.ctas{opacity:0}
+.ready .pill,.ready .sub,.ready .ctas{opacity:1;transition:opacity 1s .2s}
+.ready .sub{transition-delay:1s}.ready .ctas{transition-delay:1.3s}
+.cue{position:absolute;bottom:6vh;left:50%;transform:translateX(-50%);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);text-align:center;white-space:nowrap}
+.cue span{display:block;font-size:20px;animation:bob 1.8s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(6px)}}
+/* interactive hero */
+#hero{cursor:grab;user-select:none;-webkit-user-select:none}
+#hero.drag{cursor:grabbing}
+.rip{position:fixed;z-index:45;width:24px;height:24px;margin:-12px 0 0 -12px;border-radius:50%;border:2px solid var(--acc);pointer-events:none;animation:rip .9s ease-out forwards}
+@keyframes rip{to{transform:scale(7);opacity:0}}
+@media (prefers-reduced-motion:reduce){.rip{animation:none}}
+/* scenes */
+.sp{height:250vh}
+.sc{position:fixed;inset:0;z-index:2;display:grid;place-content:center;justify-items:center;text-align:center;padding:0 6vw;opacity:0;pointer-events:none;color:var(--sc)}
+.sc h2{font-family:var(--serif);font-size:clamp(34px,5.4vw,78px);letter-spacing:-.035em;line-height:1.05;font-weight:600}
+.sc p{margin-top:16px;max-width:36ch;font-size:clamp(15px,1.5vw,20px);line-height:1.5;opacity:.8}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .sc{mix-blend-mode:difference}}
+:root[data-theme="dark"] .sc{mix-blend-mode:difference}
+#flash{position:fixed;inset:0;z-index:40;background:#fff;opacity:0;pointer-events:none}
+#gloss{position:fixed;inset:0;z-index:30;pointer-events:none;opacity:.4;
+  background:linear-gradient(112deg,rgba(255,255,255,0) 34%,rgba(255,255,255,.55) 44%,rgba(255,255,255,.12) 49%,rgba(255,255,255,0) 56%),
+   radial-gradient(900px circle at var(--mx,50%) var(--my,15%),rgba(255,255,255,.4),rgba(255,255,255,0) 60%);
+  background-size:260% 100%,100% 100%;background-position:var(--gx,30%) 0,0 0}
+/* end */
+#end{position:relative;z-index:1;padding:0 clamp(18px,5vw,64px) 80px;max-width:1240px;margin:0 auto;isolation:isolate}
+#end::before{content:"";position:absolute;z-index:-1;pointer-events:none;top:-10vh;bottom:0;left:50%;width:100vw;transform:translateX(-50%);background:
+radial-gradient(circle 420px at 12% 6%,rgba(110,90,240,.16),transparent 70%),radial-gradient(circle 380px at 88% 24%,rgba(120,150,255,.16),transparent 70%),
+radial-gradient(circle 440px at 16% 50%,rgba(130,130,255,.14),transparent 70%),radial-gradient(circle 360px at 86% 66%,rgba(110,150,255,.16),transparent 70%),
+radial-gradient(circle 420px at 28% 90%,rgba(110,90,240,.14),transparent 70%)}
+#end section{padding:clamp(70px,11vh,120px) 0 0}
+.kick{display:flex;align-items:center;gap:12px;font:600 14px/1.4 var(--sans);color:var(--acc);margin-bottom:14px}
+.kick::before{content:"";width:16px;height:2px;border-radius:2px;background:currentColor;flex:none}
+#end h2.t{font-family:var(--serif);font-size:clamp(34px,4.8vw,64px);font-weight:600;letter-spacing:-.035em;line-height:1.05;margin-bottom:36px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.card{position:relative;padding:28px;border-radius:32px;background:var(--card);border:1px solid var(--line);box-shadow:var(--sh);overflow:hidden;isolation:isolate}
+.card p{color:var(--mut);line-height:1.65;font-size:16px}
+.card b{display:block;font-family:var(--serif);font-size:24px;font-weight:600;letter-spacing:-.02em;line-height:1.15;margin:12px 0 0}
+.card .n{display:block;font-weight:700;font-size:14px;color:var(--acc)}
+.card .n::after{content:".0"}
+.tile{height:150px;border-radius:22px;background:var(--tile);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;gap:10px;margin:20px 0}
+.tile.dk{background:#141418;background-image:radial-gradient(rgba(255,255,255,.08) 1px,transparent 1px);background-size:14px 14px;border:0}
+.chip{width:46px;height:46px;border-radius:14px;background:var(--card);border:1px solid var(--line);display:grid;place-items:center;font:600 20px/1 var(--sans);color:var(--mut)}
+.chip.on{background:var(--btn);color:var(--btnt);border-color:transparent;box-shadow:0 8px 18px rgba(17,17,20,.25)}
+.circ{width:66px;height:66px;border-radius:50%;background:#d9d2ff;border:2px solid #1b1148;color:#1b1148;display:grid;place-items:center;box-shadow:0 10px 20px rgba(60,40,160,.22)}
+.circ.rd{background:#ffd9db;border-color:#6e1b20;color:#6e1b20;box-shadow:0 10px 20px rgba(160,40,50,.2)}
+.sq{width:78px;height:78px;border-radius:22px;border:2px solid #8b7bff;color:#a99cff;display:grid;place-items:center;box-shadow:0 0 24px rgba(124,108,240,.55),inset 0 0 16px rgba(124,108,240,.25)}
+.lead{font-size:clamp(16px,1.4vw,19px);line-height:1.6;color:var(--mut);max-width:46ch}
+.lead.panel{padding:24px 28px;border-radius:28px;background:var(--card);border:1px solid var(--line);box-shadow:var(--sh);max-width:none}
+/* tilt */
+.card.tilt{transition:border-color .3s,box-shadow .3s}
+.card.tilt.rv.in{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(var(--ty,0px))}
+.card.tilt.rv.in:hover{--ty:-5px;border-color:rgba(91,63,214,.35);box-shadow:0 22px 48px rgba(30,20,90,.13)}
+.card.tilt.live{transition:transform .18s ease-out,border-color .3s,box-shadow .3s}
+.card.tilt::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:-1;opacity:0;transition:opacity .3s;background:radial-gradient(420px circle at var(--px,50%) var(--py,0%),rgba(100,80,240,.1),rgba(100,80,240,0) 60%)}
+.card.tilt:hover::after{opacity:1}
+/* reveal */
+.rv{opacity:0;transform:translateY(28px);filter:blur(6px);transition:opacity .9s var(--rd,0s),transform .9s var(--rd,0s),filter .9s var(--rd,0s)}
+.rv.in{opacity:1;transform:none;filter:none}
+/* safety */
+.bento{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:20px}
+.bc{display:flex;flex-direction:column;justify-content:flex-start}
+.bc p{font-size:17px;line-height:1.5;color:var(--ink);font-weight:500}
+.bc.feat{grid-row:span 2;padding:40px;justify-content:space-between}
+.bc.feat p{font-family:var(--serif);font-size:clamp(26px,3vw,40px);line-height:1.18;font-weight:600;letter-spacing:-.025em}
+.bc.wide{grid-column:span 2}
+.card.bc.feat{background:linear-gradient(155deg,#5a3be0 0%,#2d1c96 55%,#170f52 100%);border-color:rgba(255,255,255,.14);box-shadow:0 26px 60px rgba(60,40,200,.35)}
+.bc.feat>:not(.ech){position:relative;z-index:1}
+.bc.feat p{color:#fff}
+.bc.feat .ic.q{color:#fff;background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.32)}
+.ech{position:absolute;left:-8px;top:-8px;width:160px;height:160px;z-index:0;pointer-events:none}
+.ech i{position:absolute;inset:0;border-radius:50%;border:1.5px solid rgba(255,255,255,.4);opacity:0;animation:ech 4.2s ease-out infinite}
+.ech i:nth-child(2){animation-delay:1.4s}.ech i:nth-child(3){animation-delay:2.8s}
+@keyframes ech{0%{transform:scale(.45);opacity:.9}100%{transform:scale(1.9);opacity:0}}
+.nv{display:flex;align-items:center;gap:12px;margin-bottom:26px;min-height:48px}
+.nx{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;flex:none;background:rgba(229,72,77,.12);color:#e5484d;border:1px solid rgba(229,72,77,.3);font:700 14px/1 var(--sans)}
+.nw{position:relative;white-space:nowrap;font:600 clamp(18px,1.7vw,26px)/1.1 var(--serif);letter-spacing:-.02em;color:var(--mut)}
+:lang(kn) .nw{white-space:normal}
+.nw::after{content:"";position:absolute;left:-4px;right:-4px;top:54%;height:3px;border-radius:3px;background:#e5484d;transform:scaleX(0);transform-origin:left;transition:transform .8s cubic-bezier(.2,.8,.2,1) .7s}
+.rv.in .nw::after{transform:scaleX(1)}
+.rdc{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px}
+.rf{display:inline-flex;align-items:center;gap:10px;padding:8px 14px;border-radius:999px;background:var(--tile);border:1px solid var(--line);font:600 14px var(--sans);color:var(--mut)}
+.rf em{font-style:normal}
+.rf i{display:block;width:76px;height:12px;border-radius:4px;background:var(--ink);transform:scaleX(0);transform-origin:left;transition:transform .6s cubic-bezier(.2,.8,.2,1) var(--bd,.6s)}
+.rv.in .rf i{transform:scaleX(1)}
+.rf:nth-child(2) i{--bd:.85s}.rf:nth-child(3) i{--bd:1.1s}
+.rdc .lk{margin-left:auto;color:var(--acc)}
+@media (prefers-reduced-motion:reduce){.ech i{animation:none}.nw::after,.rf i{transform:none;transition:none}}
+.ic{width:48px;height:48px;height:48px;border-radius:50%;display:grid;place-items:center;margin-bottom:18px;color:var(--acc);background:rgba(91,63,214,.1);border:1px solid rgba(91,63,214,.16)}
+.ic.q{font:600 40px/1 var(--serif);width:64px;height:64px;margin-bottom:60px}
+/* dashboard */
+.dgrid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:34px;align-items:center}
+.leg{list-style:none;display:flex;gap:22px;flex-wrap:wrap;margin-top:22px;font-size:15px;color:var(--mut)}
+.leg li{display:flex;align-items:center;gap:10px}
+.leg i{display:inline-block;border-radius:50%}
+.leg .b{width:16px;height:16px;background:rgba(91,63,214,.55);border:1px solid #fff}
+.leg .f{width:12px;height:12px;background:#e5484d;box-shadow:0 0 0 4px rgba(229,72,77,.22)}
+.mapc{padding:22px}
+.d{fill:#f4f3ff;stroke:rgba(91,63,214,.4);stroke-width:1.5;stroke-linejoin:round;transition:fill .3s}
+.d:hover{fill:rgba(91,63,214,.14)}
+.d{cursor:pointer;outline:none}
+.selo{fill:rgba(91,63,214,.16);stroke:var(--acc);stroke-width:2.6;stroke-linejoin:round;pointer-events:none;animation:sp .4s ease-out}
+@keyframes sp{from{opacity:0}}
+.cb{transition:fill .4s}.cb.hot{fill:rgba(91,63,214,.88)}
+.rdo{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:24px}
+.rdo>div{padding:16px 18px;border-radius:22px;background:var(--card);border:1px solid var(--line);box-shadow:var(--sh)}
+.rdo small{display:block;font:600 11px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--mut);margin-bottom:8px}
+.rv2{font:600 32px/1 var(--serif);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+#dfn.on{color:#e5484d}
+.smp{grid-column:1/-1;justify-self:start;font:600 12px/1 var(--sans);color:var(--mut);padding:7px 12px;border-radius:999px;border:1px dashed var(--line)}
+
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .d{fill:rgba(255,255,255,.06);stroke:rgba(190,170,255,.6)}}
+:root[data-theme="dark"] .d{fill:rgba(255,255,255,.06);stroke:rgba(190,170,255,.6)}
+.cb{fill:rgba(91,63,214,.5);stroke:#fff;stroke-opacity:.85;stroke-width:1.5;pointer-events:none;transform-box:fill-box;transform-origin:center;animation:pul 3.2s ease-in-out var(--bd,0s) infinite}
+@keyframes pul{50%{transform:scale(1.14)}}
+.fl{cursor:pointer;outline:none}
+.fl .core{fill:#e5484d;stroke:#fff;stroke-width:1.5}
+.fl .ping{fill:none;stroke:#e5484d;stroke-width:2;transform-box:fill-box;transform-origin:center;animation:png 2.4s ease-out infinite}
+.fl .p2{animation-delay:1.2s}
+@keyframes png{0%{transform:scale(1);opacity:.9}100%{transform:scale(3.4);opacity:0}}
+.fl .tip{opacity:0;transition:opacity .25s;pointer-events:none}
+.fl .tip rect{fill:#111114}
+.fl .tip text{fill:#fff;font:600 14px 'Inter','Noto Sans Devanagari','Noto Sans Kannada',sans-serif}
+.fl:hover .tip,.fl:focus .tip{opacity:1}
+/* closing */
+.card.cta{padding:clamp(36px,6vw,76px);border-radius:36px}
+#end h2.t.big{font-size:clamp(32px,4.8vw,68px);line-height:1.1;margin:0 0 18px;max-width:20ch}
+.cta p{margin:0;max-width:46ch;font-size:clamp(16px,1.5vw,19px)}
+.cta .kick{margin-bottom:24px}
+.ft{margin-top:36px;font-size:14px;color:var(--mut)}
+.ft .bot{display:flex;justify-content:space-between;align-items:center;gap:12px 24px;flex-wrap:wrap;padding-top:22px;border-top:1px solid var(--line)}
+.ft .bot .logo{font-size:20px;color:var(--ink)}
+/* Hindi / Kannada */
+:lang(hi) *,:lang(kn) *{letter-spacing:0!important;text-transform:none!important}
+:lang(hi) h1,:lang(kn) h1{font-size:clamp(30px,4.8vw,66px);line-height:1.4;max-width:none}
+:lang(hi) .sc h2,:lang(kn) .sc h2,:lang(hi) #end h2.t,:lang(kn) #end h2.t{line-height:1.35}
+:lang(hi) .sc h2,:lang(kn) .sc h2{font-size:clamp(28px,4.4vw,58px)}
+:lang(hi) #end h2.t,:lang(kn) #end h2.t{font-size:clamp(28px,4vw,54px)}
+:lang(hi) #end h2.t.big,:lang(kn) #end h2.t.big{font-size:clamp(28px,4.2vw,58px)}
+:lang(hi) .sc p,:lang(kn) .sc p,:lang(hi) .card p,:lang(kn) .card p,:lang(hi) .lead,:lang(kn) .lead,:lang(hi) .sub,:lang(kn) .sub,:lang(hi) .bc p,:lang(kn) .bc p{line-height:1.75}
+:lang(hi) .card b,:lang(kn) .card b{line-height:1.4}
+:lang(hi) .bc.feat p,:lang(kn) .bc.feat p{line-height:1.5}
+@media (max-width:900px){nav{display:none}header{padding-left:16px}.logo{font-size:20px}header .btn{display:none}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:860px){.bento{grid-template-columns:1fr}.bc.feat{grid-row:auto;padding:30px}.ic.q{margin-bottom:28px}.bc.wide{grid-column:auto}.dgrid{grid-template-columns:1fr}}
+@media (max-width:600px){.grid{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.cue span,.orb,.cb,.fl .ping{animation:none}.on .w{animation:none;background-position:100% 0}.rv{opacity:1;transform:none;filter:none}}
+</style>
+</head>
+<body class="lock">
+<canvas id="gl"></canvas><div id="flash"></div><div id="gloss"></div>
+
+<header>
+  <a class="logo" href="#top"><i class="mk"><svg viewBox="0 0 48 48" width="40" height="40" aria-hidden="true"><defs><linearGradient id="lg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a48bff"/><stop offset="1" stop-color="#4326c9"/></linearGradient></defs><rect width="48" height="48" rx="15" fill="url(#lg1)"/><g class="lge" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M17 18C17 13 20.5 10 24.5 10 28.8 10 31.5 12.8 31.5 16.5 31.5 20 29 21.4 26.8 23 25 24.3 24 25.4 24 28"/><circle cx="24" cy="35.5" r="1.6"/></g><path d="M17 18C17 13 20.5 10 24.5 10 28.8 10 31.5 12.8 31.5 16.5 31.5 20 29 21.4 26.8 23 25 24.3 24 25.4 24 28" fill="none" stroke="#fff" stroke-width="4.6" stroke-linecap="round"/><circle cx="24" cy="35.5" r="3" fill="#fff"/></svg></i><span><span data-i="logo">Zaroori</span><b>?</b></span></a>
+  <nav><a href="#problem" data-i="n1">Problem</a><a href="#how" data-i="n2">How it works</a><a href="#safety" data-i="n3">Safety</a><a href="#dash" data-i="n4">Dashboard</a></nav>
+  <div class="lang" role="group" aria-label="Language"><button data-l="hi">हिन्दी</button><button data-l="kn">ಕನ್ನಡ</button><button data-l="en" class="on">EN</button></div>
+</header>
+
+<section id="hero"><span id="top"></span>
+  <div class="pill" data-i="pill">Rural Women’s Healthcare Second-Opinion Initiative</div>
+  <h1 id="h1" aria-live="polite"></h1>
+  <p class="sub" id="sub"></p>
+  <div class="ctas"><a class="btn lime" data-console data-k="c">Open Console ↗</a><a class="btn ghost" href="#how" data-k="w">How it works</a></div>
+  <div class="cue"><em data-i="cue" style="font-style:normal">Scroll to see why it matters</em><span>↓</span></div>
+</section>
+
+<div class="sp" id="problem"></div><div class="sp"></div><div class="sp"></div>
+
+<div class="sc" id="s1"><h2 data-i="s1h">No Second Opinion</h2><p data-i="s1p">Many women are told to remove the womb and never told they can ask once more.</p></div>
+<div class="sc" id="s2"><h2 data-i="s2h">Pressure, Not Choice</h2><p data-i="s2p">Contractors, employers and family push young women toward a decision she never really made.</p></div>
+<div class="sc" id="s3"><h2 data-i="s3h">The Information Gap</h2><p data-i="s3p">Between what she was told and what she could ask.</p></div>
+
+<main id="end">
+  <section id="how"><span class="kick sm rv" data-i="kk1">Step by step</span><h2 class="t rv" data-i="how">How it works</h2>
+    <div class="grid">
+      <div class="card tilt rv" style="--rd:0.00s"><span class="n">1</span><b data-i="c1t">Pick a language</b><div class="tile"><span class="chip">A</span><span class="chip on">अ</span><span class="chip">ಕ</span></div><p data-i="c1p">The ASHA didi sits with her and chooses Hindi, Kannada or English.</p></div>
+      <div class="card tilt rv" style="--rd:0.12s"><span class="n">2</span><b data-i="c2t">Six questions, read aloud</b><div class="tile dk"><span class="sq"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 010 7M19 6a8.5 8.5 0 010 12"/></svg></span></div><p data-i="c2p">Big buttons, one question per screen. No reading needed.</p></div>
+      <div class="card tilt rv" style="--rd:0.24s"><span class="n">3</span><b data-i="c3t">A second-opinion plan</b><div class="tile"><span class="circ"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></div><p data-i="c3p">Questions to ask the doctor and a nearby government hospital.</p></div>
+      <div class="card tilt rv" style="--rd:0.00s"><span class="n">4</span><b data-i="c4t">An anonymous slip</b><div class="tile dk"><span class="sq"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M10 12h5M10 16h5"/></svg></span></div><p data-i="c4p">A PDF she can carry to the clinic. No name on it.</p></div>
+      <div class="card tilt rv" style="--rd:0.12s"><span class="n">5</span><b data-i="c5t">If she is being forced</b><div class="tile"><span class="circ rd"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v9"/><path d="M12 19v.01"/></svg></span></div><p data-i="c5p">The screen turns red and shows her rights and a helpline. With her consent, an NGO or officer is alerted the same day.</p></div>
+      <div class="card tilt rv" style="--rd:0.24s"><span class="n">6</span><b data-i="c6t">Patterns, not people</b><div class="tile dk"><span class="sq"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg></span></div><p data-i="c6p">Health officials see district counts and flagged hospitals, never a woman’s identity.</p></div>
+    </div>
+  </section>
+  <section id="safety"><span class="kick sm rv" data-i="n3">Safety</span><h2 class="t rv" data-i="saf">Safe by design</h2>
+    <div class="bento">
+      <div class="card bc feat rv"><span class="ech" aria-hidden="true"><i></i><i></i><i></i></span><span class="ic q" aria-hidden="true">?</span><p data-i="sf3">We only say: ask once more before a big decision.</p></div>
+      <div class="card bc rv" style="--rd:.1s"><span class="nv"><span class="nx" aria-hidden="true">✕</span><span class="nw" data-i="sl1">Diagnosis</span></span><p data-i="sf1">We never diagnose.</p></div>
+      <div class="card bc rv" style="--rd:.2s"><span class="nv"><span class="nx" aria-hidden="true">✕</span><span class="nw" data-i="sl2">“Don’t do surgery”</span></span><p data-i="sf2">We never say “don’t do surgery”.</p></div>
+      <div class="card bc wide rv" style="--rd:.3s"><div class="rdc"><span class="rf"><em data-i="sl3">Name</em><i></i></span><span class="rf"><em data-i="sl4">Phone</em><i></i></span><span class="rf"><em data-i="sl5">Aadhaar</em><i></i></span><svg class="lk" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg></div><p data-i="sf4">No names, phone numbers or Aadhaar are stored.</p></div>
+    </div></section>
+  <section id="dash"><div class="dgrid">
+    <div class="dtext"><span class="kick sm rv" data-i="n4">Dashboard</span><h2 class="t rv" data-i="dsh">For health officials</h2>
+      <p class="lead panel rv" data-i="dshp">A district map with case counts and hospital flags. A flag means “please check”. It is not an accusation.</p>
+      <ul class="leg rv"><li><i class="b"></i><span data-i="dl1">Case counts</span></li><li><i class="f"></i><span data-i="dl2">Hospital flag</span></li></ul>
+      <div class="rdo rv" style="--rd:.2s" aria-live="polite"><div><small data-i="dd">District</small><span class="rv2" id="dn">5</span></div><div><small data-i="dc">Cases</small><span class="rv2" id="dcn">0</span></div><div><small data-i="df">Hospital flags</small><span class="rv2" id="dfn">0</span></div><span class="smp" data-i="dsm">Sample data</span></div></div>
+    <div class="card mapc rv" style="--rd:.15s"><svg viewBox="0 0 600 380" role="img" aria-label="District map" style="width:100%;height:auto;display:block;overflow:visible"><polygon class="d" tabindex="0" data-n="1" data-c="18" data-f="1" points="40,120 150,60 250,100 140,190"/><polygon class="d" tabindex="0" data-n="2" data-c="9" data-f="0" points="150,60 270,35 390,70 360,130 250,100"/><polygon class="d" tabindex="0" data-n="3" data-c="31" data-f="1" points="390,70 520,60 570,150 470,170 360,130"/><polygon class="d" tabindex="0" data-n="4" data-c="7" data-f="0" points="40,120 140,190 230,210 190,320 80,260"/><polygon class="d" tabindex="0" data-n="5" data-c="42" data-f="0" points="250,100 360,130 350,240 230,210 140,190"/><polygon class="d" tabindex="0" data-n="6" data-c="12" data-f="0" points="360,130 470,170 440,260 350,240"/><polygon class="d" tabindex="0" data-n="7" data-c="6" data-f="0" points="470,170 570,150 540,260 440,260"/><polygon class="d" tabindex="0" data-n="8" data-c="24" data-f="1" points="350,240 440,260 540,260 440,330 320,345 190,320 230,210"/><polygon class="selo" points=""/><circle class="cb" style="--bd:0.00s" cx="145" cy="115" r="20"/><circle class="cb" style="--bd:0.35s" cx="285" cy="80" r="14"/><circle class="cb" style="--bd:0.70s" cx="460" cy="115" r="26"/><circle class="cb" style="--bd:1.05s" cx="135" cy="220" r="12"/><circle class="cb" style="--bd:1.40s" cx="265" cy="175" r="30"/><circle class="cb" style="--bd:1.75s" cx="405" cy="200" r="16"/><circle class="cb" style="--bd:2.10s" cx="505" cy="210" r="12"/><circle class="cb" style="--bd:2.45s" cx="330" cy="290" r="22"/><g class="fl" tabindex="0" transform="translate(490 78)"><circle class="ping" r="7"/><circle class="ping p2" r="7"/><circle class="core" r="7"/><path d="M0 -3v4M0 4v.01" stroke="#fff" stroke-width="2" stroke-linecap="round"/><g class="tip"><rect x="-78" y="-46" width="156" height="30" rx="15"/><text x="0" y="-26" text-anchor="middle" data-i="tip">Please check</text></g></g><g class="fl" tabindex="0" transform="translate(362 312)"><circle class="ping" r="7"/><circle class="ping p2" r="7"/><circle class="core" r="7"/><path d="M0 -3v4M0 4v.01" stroke="#fff" stroke-width="2" stroke-linecap="round"/><g class="tip"><rect x="-78" y="-46" width="156" height="30" rx="15"/><text x="0" y="-26" text-anchor="middle" data-i="tip">Please check</text></g></g><g class="fl" tabindex="0" transform="translate(172 98)"><circle class="ping" r="7"/><circle class="ping p2" r="7"/><circle class="core" r="7"/><path d="M0 -3v4M0 4v.01" stroke="#fff" stroke-width="2" stroke-linecap="round"/><g class="tip"><rect x="-78" y="-46" width="156" height="30" rx="15"/><text x="0" y="-26" text-anchor="middle" data-i="tip">Please check</text></g></g></svg></div>
+  </div></section>
+  <section class="fin">
+    <div class="card cta rv">
+      <span class="kick" data-i="pill">Rural Women’s Healthcare Second-Opinion Initiative</span>
+      <h2 class="t big" data-i="cl">Every woman deserves a second opinion.</h2>
+      <p data-i="cls">Zaroori? helps ASHA didis guide her, in her own language.</p>
+    </div>
+    <footer class="ft">
+      <div class="bot"><a class="logo" href="#top"><i class="mk"><svg viewBox="0 0 48 48" width="40" height="40" aria-hidden="true"><defs><linearGradient id="lg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a48bff"/><stop offset="1" stop-color="#4326c9"/></linearGradient></defs><rect width="48" height="48" rx="15" fill="url(#lg2)"/><g class="lge" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M17 18C17 13 20.5 10 24.5 10 28.8 10 31.5 12.8 31.5 16.5 31.5 20 29 21.4 26.8 23 25 24.3 24 25.4 24 28"/><circle cx="24" cy="35.5" r="1.6"/></g><path d="M17 18C17 13 20.5 10 24.5 10 28.8 10 31.5 12.8 31.5 16.5 31.5 20 29 21.4 26.8 23 25 24.3 24 25.4 24 28" fill="none" stroke="#fff" stroke-width="4.6" stroke-linecap="round"/><circle cx="24" cy="35.5" r="3" fill="#fff"/></svg></i><span><span data-i="logo">Zaroori</span><b>?</b></span></a><span data-i="sf4">No names, phone numbers or Aadhaar are stored.</span></div>
+    </footer>
+  </section>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+const CONSOLE_URL="/"; // use the hosted console URL once deployed
+const $=s=>document.querySelector(s),clamp=(x,a,b)=>Math.min(b,Math.max(a,x)),lerp=(a,b,k)=>a+(b-a)*k;
+const ss=(a,b,x)=>{x=clamp((x-a)/(b-a),0,1);return x*x*(3-2*x)},trap=(t,a,b,c,d)=>ss(a,b,t)*(1-ss(c,d,t));
+const RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
+document.querySelectorAll('[data-console]').forEach(a=>a.href=CONSOLE_URL);
+if('scrollRestoration' in history)history.scrollRestoration='manual';scrollTo(0,0);
+
+/* ---------- language (Hindi/Kannada are drafts: get a native speaker to review) ---------- */
+const T={
+ en:{e:[1,2],h:'Ask Once More Before A Big Decision',p:'Zaroori? helps ASHA didis guide village women who are advised womb-removal surgery. Six simple questions, big buttons, and a second-opinion plan.',c:'Open Console ↗',w:'How it works',x:{"logo": "Zaroori", "n1": "Problem", "n2": "How it works", "n3": "Safety", "n4": "Dashboard", "pill": "Rural Women’s Healthcare Second-Opinion Initiative", "cue": "Scroll to see why it matters", "s1h": "No Second Opinion", "s1p": "Many women are told to remove the womb and never told they can ask once more.", "s2h": "Pressure, Not Choice", "s2p": "Contractors, employers and family push young women toward a decision she never really made.", "s3h": "The Information Gap", "s3p": "Between what she was told and what she could ask.", "how": "How it works", "c1t": "Pick a language", "c1p": "The ASHA didi sits with her and chooses Hindi, Kannada or English.", "c2t": "Six questions, read aloud", "c2p": "Big buttons, one question per screen. No reading needed.", "c3t": "A second-opinion plan", "c3p": "Questions to ask the doctor and a nearby government hospital.", "c4t": "An anonymous slip", "c4p": "A PDF she can carry to the clinic. No name on it.", "c5t": "If she is being forced", "c5p": "The screen turns red and shows her rights and a helpline. With her consent, an NGO or officer is alerted the same day.", "c6t": "Patterns, not people", "c6p": "Health officials see district counts and flagged hospitals, never a woman’s identity.", "saf": "Safe by design", "safp": "We never diagnose. We never say “don’t do surgery”. We only say: ask once more before a big decision. No names, phone numbers or Aadhaar are stored.", "dsh": "For health officials", "dshp": "A district map with case counts and hospital flags. A flag means “please check”. It is not an accusation.", "fin": "Ask once more."}},
+ hi:{e:[4,5,6,7],h:'बड़े फ़ैसले से पहले एक बार और पूछिए',p:'ज़रूरी? आशा दीदियों को उन ग्रामीण महिलाओं की मदद करने देता है जिन्हें बच्चेदानी निकलवाने की सलाह दी गई है। छह आसान सवाल, बड़े बटन और दूसरी राय की योजना।',c:'कंसोल खोलें ↗',w:'यह कैसे काम करता है',x:{"logo": "ज़रूरी", "n1": "समस्या", "n2": "यह कैसे काम करता है", "n3": "सुरक्षा", "n4": "डैशबोर्ड", "pill": "ग्रामीण महिला स्वास्थ्य दूसरी राय पहल", "cue": "क्यों ज़रूरी है, यह देखने के लिए नीचे स्क्रॉल करें", "s1h": "दूसरी राय नहीं", "s1p": "कई महिलाओं को बच्चेदानी निकलवाने को कहा जाता है, पर यह कभी नहीं बताया जाता कि वे एक बार और पूछ सकती हैं।", "s2h": "दबाव, चुनाव नहीं", "s2p": "ठेकेदार, मालिक और परिवार युवा महिलाओं को ऐसे फ़ैसले की ओर धकेलते हैं, जो उसने कभी सच में लिया ही नहीं।", "s3h": "जानकारी की खाई", "s3p": "जो उसे बताया गया और जो वह पूछ सकती थी, इन दोनों के बीच।", "how": "यह कैसे काम करता है", "c1t": "भाषा चुनें", "c1p": "आशा दीदी उसके साथ बैठकर हिन्दी, कन्नड़ या अंग्रेज़ी चुनती हैं।", "c2t": "छह सवाल, ज़ोर से पढ़कर सुनाए जाते हैं", "c2p": "बड़े बटन, हर स्क्रीन पर एक सवाल। पढ़ना आना ज़रूरी नहीं।", "c3t": "दूसरी राय की योजना", "c3p": "डॉक्टर और पास के सरकारी अस्पताल से पूछने के लिए सवाल।", "c4t": "बिना नाम की पर्ची", "c4p": "एक पीडीएफ़ जिसे वह क्लिनिक ले जा सकती है। उस पर कोई नाम नहीं होता।", "c5t": "अगर उस पर ज़बरदस्ती हो रही हो", "c5p": "स्क्रीन लाल हो जाती है और उसके अधिकार व हेल्पलाइन दिखाती है। उसकी सहमति से किसी स्वयंसेवी संस्था या अधिकारी को उसी दिन सूचना भेजी जाती है।", "c6t": "लोग नहीं, पैटर्न", "c6p": "स्वास्थ्य अधिकारी ज़िले की गिनती और चिह्नित अस्पताल देखते हैं, किसी महिला की पहचान कभी नहीं।", "saf": "डिज़ाइन से ही सुरक्षित", "safp": "हम कभी बीमारी की पहचान नहीं करते। हम कभी नहीं कहते “ऑपरेशन मत कराइए”। हम सिर्फ़ इतना कहते हैं: बड़े फ़ैसले से पहले एक बार और पूछिए। नाम, फ़ोन नंबर या आधार, कुछ भी सहेजा नहीं जाता।", "dsh": "स्वास्थ्य अधिकारियों के लिए", "dshp": "ज़िले का नक्शा, जिसमें मामलों की गिनती और अस्पतालों के निशान हैं। निशान का मतलब है “कृपया जाँच करें”। यह कोई आरोप नहीं है।", "fin": "एक बार और पूछिए।"}},
+ kn:{e:[3,4],h:'ದೊಡ್ಡ ನಿರ್ಧಾರದ ಮೊದಲು ಇನ್ನೊಮ್ಮೆ ಕೇಳಿ',p:'ಗರ್ಭಕೋಶ ತೆಗೆಸಲು ಸಲಹೆ ಪಡೆದ ಹಳ್ಳಿಯ ಮಹಿಳೆಯರಿಗೆ ಆಶಾ ದೀದಿಯರು ದಾರಿ ತೋರಿಸಲು ಜರೂರಿ? ನೆರವಾಗುತ್ತದೆ. ಆರು ಸರಳ ಪ್ರಶ್ನೆಗಳು, ದೊಡ್ಡ ಬಟನ್‌ಗಳು ಮತ್ತು ಎರಡನೇ ಅಭಿಪ್ರಾಯದ ಯೋಜನೆ.',c:'ಕನ್ಸೋಲ್ ತೆರೆಯಿರಿ ↗',w:'ಇದು ಹೇಗೆ ಕೆಲಸ ಮಾಡುತ್ತದೆ',x:{"logo": "ಜರೂರಿ", "n1": "ಸಮಸ್ಯೆ", "n2": "ಇದು ಹೇಗೆ ಕೆಲಸ ಮಾಡುತ್ತದೆ", "n3": "ಸುರಕ್ಷತೆ", "n4": "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್", "pill": "ಗ್ರಾಮೀಣ ಮಹಿಳೆಯರ ಆರೋಗ್ಯ ಎರಡನೇ ಅಭಿಪ್ರಾಯ ಉಪಕ್ರಮ", "cue": "ಇದು ಏಕೆ ಮುಖ್ಯ ಎಂದು ನೋಡಲು ಕೆಳಗೆ ಸ್ಕ್ರಾಲ್ ಮಾಡಿ", "s1h": "ಎರಡನೇ ಅಭಿಪ್ರಾಯವೇ ಇಲ್ಲ", "s1p": "ಅನೇಕ ಮಹಿಳೆಯರಿಗೆ ಗರ್ಭಕೋಶ ತೆಗೆಸಿಕೊಳ್ಳಲು ಹೇಳಲಾಗುತ್ತದೆ, ಆದರೆ ಇನ್ನೊಮ್ಮೆ ಕೇಳಬಹುದು ಎಂದು ಯಾರೂ ಹೇಳುವುದಿಲ್ಲ.", "s2h": "ಒತ್ತಡ, ಆಯ್ಕೆಯಲ್ಲ", "s2p": "ಗುತ್ತಿಗೆದಾರರು, ಮಾಲೀಕರು ಮತ್ತು ಕುಟುಂಬದವರು ಯುವತಿಯರನ್ನು ಅವರು ನಿಜವಾಗಿ ತೆಗೆದುಕೊಳ್ಳದ ನಿರ್ಧಾರದತ್ತ ತಳ್ಳುತ್ತಾರೆ.", "s3h": "ಮಾಹಿತಿಯ ಅಂತರ", "s3p": "ಅವಳಿಗೆ ಹೇಳಿದ್ದಕ್ಕೂ ಅವಳು ಕೇಳಬಹುದಾಗಿದ್ದಕ್ಕೂ ನಡುವೆ.", "how": "ಇದು ಹೇಗೆ ಕೆಲಸ ಮಾಡುತ್ತದೆ", "c1t": "ಭಾಷೆ ಆಯ್ಕೆಮಾಡಿ", "c1p": "ಆಶಾ ದೀದಿ ಅವಳ ಜೊತೆ ಕುಳಿತು ಹಿಂದಿ, ಕನ್ನಡ ಅಥವಾ ಇಂಗ್ಲಿಷ್ ಆಯ್ಕೆ ಮಾಡುತ್ತಾರೆ.", "c2t": "ಆರು ಪ್ರಶ್ನೆಗಳು, ಗಟ್ಟಿಯಾಗಿ ಓದಿ ಹೇಳಲಾಗುತ್ತದೆ", "c2p": "ದೊಡ್ಡ ಬಟನ್‌ಗಳು, ಒಂದು ಪರದೆಗೆ ಒಂದು ಪ್ರಶ್ನೆ. ಓದಲು ಬರಬೇಕಿಲ್ಲ.", "c3t": "ಎರಡನೇ ಅಭಿಪ್ರಾಯದ ಯೋಜನೆ", "c3p": "ವೈದ್ಯರನ್ನು ಮತ್ತು ಹತ್ತಿರದ ಸರ್ಕಾರಿ ಆಸ್ಪತ್ರೆಯನ್ನು ಕೇಳಬೇಕಾದ ಪ್ರಶ್ನೆಗಳು.", "c4t": "ಹೆಸರಿಲ್ಲದ ಚೀಟಿ", "c4p": "ಕ್ಲಿನಿಕ್‌ಗೆ ಕೊಂಡೊಯ್ಯಬಹುದಾದ ಪಿಡಿಎಫ್. ಅದರ ಮೇಲೆ ಯಾವುದೇ ಹೆಸರಿಲ್ಲ.", "c5t": "ಅವಳ ಮೇಲೆ ಬಲವಂತ ಮಾಡುತ್ತಿದ್ದರೆ", "c5p": "ಪರದೆ ಕೆಂಪಾಗಿ ಅವಳ ಹಕ್ಕುಗಳನ್ನು ಮತ್ತು ಸಹಾಯವಾಣಿಯನ್ನು ತೋರಿಸುತ್ತದೆ. ಅವಳ ಒಪ್ಪಿಗೆಯೊಂದಿಗೆ ಸ್ವಯಂಸೇವಾ ಸಂಸ್ಥೆ ಅಥವಾ ಅಧಿಕಾರಿಗೆ ಅದೇ ದಿನ ಎಚ್ಚರಿಕೆ ಕಳುಹಿಸಲಾಗುತ್ತದೆ.", "c6t": "ವ್ಯಕ್ತಿಗಳಲ್ಲ, ಮಾದರಿಗಳು", "c6p": "ಆರೋಗ್ಯ ಅಧಿಕಾರಿಗಳಿಗೆ ಜಿಲ್ಲಾವಾರು ಸಂಖ್ಯೆಗಳು ಮತ್ತು ಗುರುತಿಸಿದ ಆಸ್ಪತ್ರೆಗಳು ಮಾತ್ರ ಕಾಣುತ್ತವೆ, ಯಾವ ಮಹಿಳೆಯ ಗುರುತೂ ಅಲ್ಲ.", "saf": "ವಿನ್ಯಾಸದಲ್ಲೇ ಸುರಕ್ಷಿತ", "safp": "ನಾವು ಎಂದಿಗೂ ರೋಗನಿರ್ಣಯ ಮಾಡುವುದಿಲ್ಲ. ನಾವು ಎಂದಿಗೂ “ಶಸ್ತ್ರಚಿಕಿತ್ಸೆ ಮಾಡಿಸಬೇಡಿ” ಎನ್ನುವುದಿಲ್ಲ. ನಾವು ಹೇಳುವುದು ಇಷ್ಟೇ: ದೊಡ್ಡ ನಿರ್ಧಾರದ ಮೊದಲು ಇನ್ನೊಮ್ಮೆ ಕೇಳಿ. ಹೆಸರು, ಫೋನ್ ಸಂಖ್ಯೆ ಅಥವಾ ಆಧಾರ್ ಯಾವುದನ್ನೂ ಸಂಗ್ರಹಿಸುವುದಿಲ್ಲ.", "dsh": "ಆರೋಗ್ಯ ಅಧಿಕಾರಿಗಳಿಗಾಗಿ", "dshp": "ಪ್ರಕರಣಗಳ ಸಂಖ್ಯೆ ಮತ್ತು ಆಸ್ಪತ್ರೆಗಳ ಗುರುತುಗಳಿರುವ ಜಿಲ್ಲಾ ನಕ್ಷೆ. ಗುರುತು ಎಂದರೆ “ದಯವಿಟ್ಟು ಪರಿಶೀಲಿಸಿ”. ಇದು ಆರೋಪವಲ್ಲ.", "fin": "ಇನ್ನೊಮ್ಮೆ ಕೇಳಿ."}}};
+Object.assign(T.en.x,{"sf1": "We never diagnose.", "sf2": "We never say “don’t do surgery”.", "sf3": "We only say: ask once more before a big decision.", "sf4": "No names, phone numbers or Aadhaar are stored.", "dl1": "Case counts", "dl2": "Hospital flag", "tip": "Please check"});
+Object.assign(T.hi.x,{"sf1": "हम कभी बीमारी की पहचान नहीं करते।", "sf2": "हम कभी नहीं कहते “ऑपरेशन मत कराइए”।", "sf3": "हम सिर्फ़ इतना कहते हैं: बड़े फ़ैसले से पहले एक बार और पूछिए।", "sf4": "नाम, फ़ोन नंबर या आधार, कुछ भी सहेजा नहीं जाता।", "dl1": "मामलों की गिनती", "dl2": "अस्पताल का निशान", "tip": "कृपया जाँच करें"});
+Object.assign(T.kn.x,{"sf1": "ನಾವು ಎಂದಿಗೂ ರೋಗನಿರ್ಣಯ ಮಾಡುವುದಿಲ್ಲ.", "sf2": "ನಾವು ಎಂದಿಗೂ “ಶಸ್ತ್ರಚಿಕಿತ್ಸೆ ಮಾಡಿಸಬೇಡಿ” ಎನ್ನುವುದಿಲ್ಲ.", "sf3": "ನಾವು ಹೇಳುವುದು ಇಷ್ಟೇ: ದೊಡ್ಡ ನಿರ್ಧಾರದ ಮೊದಲು ಇನ್ನೊಮ್ಮೆ ಕೇಳಿ.", "sf4": "ಹೆಸರು, ಫೋನ್ ಸಂಖ್ಯೆ ಅಥವಾ ಆಧಾರ್ ಯಾವುದನ್ನೂ ಸಂಗ್ರಹಿಸುವುದಿಲ್ಲ.", "dl1": "ಪ್ರಕರಣಗಳ ಸಂಖ್ಯೆ", "dl2": "ಆಸ್ಪತ್ರೆಯ ಗುರುತು", "tip": "ದಯವಿಟ್ಟು ಪರಿಶೀಲಿಸಿ"});
+Object.assign(T.en.x,{"cl": "Every woman deserves a second opinion.", "cls": "Zaroori? helps ASHA didis guide her, in her own language."});
+Object.assign(T.hi.x,{"cl": "हर महिला को दूसरी राय का हक़ है।", "cls": "ज़रूरी? आशा दीदियों को उसकी अपनी भाषा में उसका साथ देने में मदद करता है।"});
+Object.assign(T.kn.x,{"cl": "ಪ್ರತಿ ಮಹಿಳೆಗೂ ಎರಡನೇ ಅಭಿಪ್ರಾಯದ ಹಕ್ಕಿದೆ.", "cls": "ಜರೂರಿ? ಆಶಾ ದೀದಿಯರಿಗೆ ಅವಳ ಸ್ವಂತ ಭಾಷೆಯಲ್ಲೇ ಮಾರ್ಗದರ್ಶನ ನೀಡಲು ನೆರವಾಗುತ್ತದೆ."});
+Object.assign(T.en.x,{"sl1": "Diagnosis", "sl2": "“Don’t do surgery”", "sl3": "Name", "sl4": "Phone", "sl5": "Aadhaar", "dd": "District", "dc": "Cases", "df": "Hospital flags", "dsm": "Sample data"});
+Object.assign(T.hi.x,{"sl1": "निदान", "sl2": "“ऑपरेशन मत कराइए”", "sl3": "नाम", "sl4": "फ़ोन", "sl5": "आधार", "dd": "ज़िला", "dc": "मामले", "df": "अस्पताल निशान", "dsm": "नमूना डेटा"});
+Object.assign(T.kn.x,{"sl1": "ರೋಗನಿರ್ಣಯ", "sl2": "“ಶಸ್ತ್ರಚಿಕಿತ್ಸೆ ಮಾಡಿಸಬೇಡಿ”", "sl3": "ಹೆಸರು", "sl4": "ಫೋನ್", "sl5": "ಆಧಾರ್", "dd": "ಜಿಲ್ಲೆ", "dc": "ಪ್ರಕರಣಗಳು", "df": "ಆಸ್ಪತ್ರೆ ಗುರುತುಗಳು", "dsm": "ಮಾದರಿ ಡೇಟಾ"});
+Object.assign(T.en.x,{"kk1": "Step by step"});
+Object.assign(T.hi.x,{"kk1": "चरण दर चरण"});
+Object.assign(T.kn.x,{"kk1": "ಹಂತ ಹಂತವಾಗಿ"});
+let ready=false;
+function setLang(l){
+  document.documentElement.lang=l;const d=T[l];
+  document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('on',b.dataset.l===l));
+  $('#sub').textContent=d.p;
+  document.querySelectorAll('[data-i]').forEach(e=>e.textContent=d.x[e.dataset.i]);
+  document.querySelectorAll('[data-k="c"]').forEach(a=>a.textContent=d.c);
+  document.querySelectorAll('[data-k="w"]').forEach(a=>a.textContent=d.w);
+  const h=$('#h1');h.classList.remove('on');
+  const parts=d.h.split(' ');let out='',open=false;
+  const endEm=d.e.includes(parts.length-1);
+  parts.forEach((w,i)=>{const em=d.e.includes(i);if(em&&!open){if(endEm&&i>0)out+='<br>';out+='<span class="hl">';open=true}if(!em&&open){out+='</span>'+(endEm?' ':'<br>');open=false}
+    out+=`<span class="w" style="--d:${(i*.09).toFixed(2)}s">${w}</span>`+(em?'':' ')});
+  if(open)out+='</span>';h.innerHTML=out;
+  if(ready)requestAnimationFrame(()=>requestAnimationFrame(()=>h.classList.add('on')));
+}
+document.querySelectorAll('.lang button').forEach(b=>b.onclick=()=>setLang(b.dataset.l));
+setLang('en');
+
+/* ---------- start immediately (no loader) ---------- */
+Promise.race([document.fonts.ready,new Promise(r=>setTimeout(r,1200))]).then(()=>{
+  ready=true;document.body.classList.remove('lock');document.body.classList.add('ready');$('#h1').classList.add('on');
+});
+
+/* ---------- 3D ---------- */
+const mouse={x:0,y:0,sx:0,sy:0};
+addEventListener('pointermove',e=>{mouse.x=e.clientX/innerWidth*2-1;mouse.y=e.clientY/innerHeight*2-1});
+const cur={t:0};
+/* ---------- interactive hero: drag to spin, tap ripple, try-it card ---------- */
+let pulse=0,drag=false,dx0=0,dy0=0,spinX=0,spinY=0,vX=0,vY=0;
+(function(){
+  const hero=$('#hero');
+  hero.addEventListener('pointerdown',e=>{
+    if(RM||e.target.closest('a,button,.try,.lang'))return;
+    drag=true;dx0=e.clientX;dy0=e.clientY;hero.classList.add('drag');pulse=Math.max(pulse,.6);
+    const r=document.createElement('div');r.className='rip';r.style.left=e.clientX+'px';r.style.top=e.clientY+'px';
+    document.body.appendChild(r);setTimeout(()=>r.remove(),950);
+  });
+  addEventListener('pointermove',e=>{if(!drag)return;vY+=(e.clientX-dx0)*.004;vX+=(e.clientY-dy0)*.004;dx0=e.clientX;dy0=e.clientY});
+  const end=()=>{drag=false;hero.classList.remove('drag')};
+  addEventListener('pointerup',end);addEventListener('pointercancel',end);
+})();
+const scenes=[[$('#s1'),1.0,1.45,3.0,3.45],[$('#s2'),3.5,3.95,5.4,5.85],[$('#s3'),5.9,6.3,7.2,7.9]];
+const heroEls=[$('.pill'),$('#h1'),$('#sub'),$('.cue')];
+const KF=[[0,-2.75,1.9],[1,0,1.25],[3.3,0,1.25],[4.1,0,.95],[6,0,.95],[8.3,0,1.05]];
+function pose(t){for(let i=1;i<KF.length;i++)if(t<=KF[i][0]){const a=KF[i-1],b=KF[i],k=ss(a[0],b[0],t);return[lerp(a[1],b[1],k),lerp(a[2],b[2],k)]}return[KF[5][1],KF[5][2]]}
+function ui(t){
+  const hv=1-ss(.1,.7,t);
+  heroEls.forEach((el,i)=>{if(el.classList.contains('cue')){el.style.opacity=1-ss(.02,.3,t)}});
+  $('#hero').style.transform=`translateY(${-(1-hv)*40}px)`;$('#hero').style.opacity=hv;$('#hero').style.pointerEvents=hv>.4?'auto':'none';
+  scenes.forEach(([el,a,b,c,d])=>{const v=trap(t,a,b,c,d);el.style.opacity=v;el.style.transform=`translateY(${(1-v)*30}px)`;el.style.filter=`blur(${(1-v)*8}px)`});
+}
+let GL=null;
+try{
+  const R=new THREE.WebGLRenderer({canvas:$('#gl'),alpha:true,antialias:true});R.setPixelRatio(Math.min(devicePixelRatio,2));
+  const sc=new THREE.Scene(),cam=new THREE.PerspectiveCamera(35,1,.1,50);cam.position.z=6;
+  const U={t:{value:0},m:{value:new THREE.Vector2()},o:{value:1}},g=new THREE.Group();sc.add(g);
+  // halo
+  const halo=new THREE.Mesh(new THREE.PlaneGeometry(5,5),new THREE.ShaderMaterial({transparent:true,depthWrite:false,uniforms:{o:U.o},
+    vertexShader:'varying vec2 u;void main(){u=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
+    fragmentShader:'uniform float o;varying vec2 u;void main(){float d=length(u-.5)*2.;gl_FragColor=vec4(.7,.66,1.,smoothstep(1.,.36,d)*.42*o);}'}));
+  halo.position.z=-.4;g.add(halo);
+  // smooth gradient sphere
+  const S=new THREE.Mesh(new THREE.SphereGeometry(1,96,96),new THREE.ShaderMaterial({transparent:true,uniforms:U,
+    vertexShader:'varying vec3 vN;varying vec3 vP;void main(){vP=position;vN=normalize(normalMatrix*normal);gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
+    fragmentShader:`uniform float t,o;uniform vec2 m;varying vec3 vN;varying vec3 vP;
+    float b(vec2 p,vec2 c,float k){vec2 d=p-c;return exp(-dot(d,d)*k);}
+    void main(){vec3 n=normalize(vN);vec2 p=vP.xy;vec3 c=vec3(1.);
+      c=mix(c,vec3(.76,.68,1.),b(p,vec2(-.4+.22*sin(t*.5)+m.x*.15,.1+.2*cos(t*.6)),4.5)*.95);
+      c=mix(c,vec3(.74,.52,1.),b(p,vec2(.05+.28*cos(t*.4),.2+.22*sin(t*.55)-m.y*.1),4.)*.95);
+      c=mix(c,vec3(.64,.68,1.),b(p,vec2(.0+.25*sin(t*.35),-.45+.12*cos(t*.5)),4.5)*.9);
+      c=mix(c,vec3(.74,.88,1.),b(p,vec2(.35+.12*sin(t*.5),-.55),7.)*.8);
+      c=mix(c,vec3(.7,.74,1.),b(p,vec2(.5+.1*cos(t*.45),.15),7.)*.6);
+      c=mix(vec3(1.),c,smoothstep(.0,.78,n.z));
+      gl_FragColor=vec4(c,o);}`}));
+  g.add(S);
+  // shards: chunky tetra-pieces of an icosahedron, flat shaded, with per-shard random spin/direction
+  const ico=new THREE.IcosahedronGeometry(1,1),ip=ico.attributes.position,P=[],C=[],Rn=[];
+  const hash=v=>{const s=Math.sin(v.x*127.1+v.y*311.7+v.z*74.7)*43758.5453;return s-Math.floor(s)};
+  const J=v=>v.clone().normalize().multiplyScalar(.9+.1*hash(v));
+  for(let i=0;i<ip.count;i+=3){
+    const a=J(new THREE.Vector3().fromBufferAttribute(ip,i)),b=J(new THREE.Vector3().fromBufferAttribute(ip,i+1)),c=J(new THREE.Vector3().fromBufferAttribute(ip,i+2));
+    const gc=a.clone().add(b).add(c).divideScalar(3),ap=gc.clone().multiplyScalar(.45),r=[Math.random(),Math.random(),Math.random()];
+    [a,b,c,b,a,ap,c,b,ap,a,c,ap].forEach(v=>{P.push(v.x,v.y,v.z);C.push(gc.x,gc.y,gc.z);Rn.push(...r)});
+  }
+  const geo=new THREE.BufferGeometry();
+  geo.setAttribute('position',new THREE.Float32BufferAttribute(P,3));geo.setAttribute('center',new THREE.Float32BufferAttribute(C,3));geo.setAttribute('rnd',new THREE.Float32BufferAttribute(Rn,3));
+  geo.computeVertexNormals();
+  const SU={e:{value:0},o:{value:1}};
+  const H=new THREE.Mesh(geo,new THREE.ShaderMaterial({transparent:true,uniforms:SU,
+    vertexShader:`uniform float e;attribute vec3 center;attribute vec3 rnd;varying vec3 vN;varying vec3 vP;
+    vec3 rot(vec3 v,vec3 x,float a){float c=cos(a),s=sin(a);return v*c+cross(x,v)*s+x*dot(x,v)*(1.-c);}
+    void main(){vec3 ax=normalize(rnd-.5+vec3(.01));float an=e*(2.+rnd.x*6.)*(rnd.y>.5?1.:-1.);
+      vec3 lp=rot(position-center,ax,an);vec3 dir=normalize(center)+(rnd-.5)*.7;
+      vec3 pos=center+lp*(1.+e*.25)+dir*e*(1.1+rnd.z*3.2);
+      vN=normalize(normalMatrix*rot(normal,ax,an));vP=position;gl_Position=projectionMatrix*modelViewMatrix*vec4(pos,1.);}`,
+    fragmentShader:`uniform float o;varying vec3 vN;varying vec3 vP;
+    void main(){vec3 n=normalize(vN);float d=max(dot(n,normalize(vec3(-.4,.7,.8))),0.);
+      vec3 base=mix(vec3(.74,.74,1.),vec3(.56,.58,1.),smoothstep(-.7,.8,vP.y+vP.x*.3));
+      vec3 c=mix(base*.62,vec3(1.),d*.75+.12);c=mix(c,vec3(1.),pow(1.-abs(n.z),2.5)*.35);
+      gl_FragColor=vec4(c,o);}`}));
+  g.add(H);H.visible=false;
+  // floating glossy objects around the hero
+  try{
+    const ec=document.createElement('canvas');ec.width=1024;ec.height=512;const x=ec.getContext('2d'),gr=x.createLinearGradient(0,0,0,512);
+    gr.addColorStop(0,'#ffffff');gr.addColorStop(.45,'#cfc6ff');gr.addColorStop(1,'#6a55e8');x.fillStyle=gr;x.fillRect(0,0,1024,512);
+    x.shadowColor='#fff';x.shadowBlur=60;x.fillStyle='#fff';
+    [[80,40,220,90],[420,20,260,70],[760,50,200,100],[250,210,140,40],[620,230,170,36]].forEach(r=>x.fillRect(r[0],r[1],r[2],r[3]));
+    x.shadowColor='#b9a9ff';x.fillStyle='#d9ceff';x.fillRect(0,330,1024,26);
+    const et=new THREE.CanvasTexture(ec);et.mapping=THREE.EquirectangularReflectionMapping;
+    const pm=new THREE.PMREMGenerator(R);sc.environment=pm.fromEquirectangular(et).texture;pm.dispose();
+  }catch(e){}
+  sc.add(new THREE.AmbientLight(0xffffff,.45));
+  const dl=new THREE.DirectionalLight(0xffffff,1.1);dl.position.set(-3,4,5);sc.add(dl);
+  const pl=new THREE.PointLight(0x9a8cff,.8,20);pl.position.set(3,-2,4);sc.add(pl);
+  const D=new THREE.Group();sc.add(D);
+  const mk=(geo,mat,fx,fy,sp,ph)=>{const m=new THREE.Mesh(geo,mat);m.userData={fx,fy,sp,ph};D.add(m);return m};
+  const gloss=(c,o)=>new THREE.MeshPhysicalMaterial({color:c,roughness:.12,metalness:.1,clearcoat:1,clearcoatRoughness:.03,envMapIntensity:1.2,transparent:o<1,opacity:o});
+  const mkg=(o,fx,fy,sp,ph,x)=>{o.userData=Object.assign({fx,fy,sp,ph,sc:1},x);D.add(o);return o};
+  const EX=(sh,d,bv)=>{const gm=new THREE.ExtrudeGeometry(sh,{depth:d,bevelEnabled:true,bevelThickness:bv,bevelSize:bv,bevelSegments:6,curveSegments:28});gm.center();return gm};
+  const rr=(w,h,r)=>{const q=new THREE.Shape(),x=-w/2,y=-h/2;q.moveTo(x+r,y);q.lineTo(x+w-r,y);q.quadraticCurveTo(x+w,y,x+w,y+r);q.lineTo(x+w,y+h-r);q.quadraticCurveTo(x+w,y+h,x+w-r,y+h);q.lineTo(x+r,y+h);q.quadraticCurveTo(x,y+h,x,y+h-r);q.lineTo(x,y+r);q.quadraticCurveTo(x,y,x+r,y);return q};
+  const TB=(pts,r,mat,seg)=>new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts.map(q=>new THREE.Vector3(q[0],q[1],0))),seg||60,r,14),mat);
+  const SP=(r,mat,x,y)=>{const m=new THREE.Mesh(new THREE.SphereGeometry(r,28,28),mat);m.position.set(x,y,0);return m};
+  const wrap=(g,dx,dy)=>{const w=new THREE.Group();g.position.set(dx,dy,0);w.add(g);return w};
+  const BX=(w,h,d,mat,x,y,z)=>{const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);m.position.set(x,y,z);return m};
+  const bas=c=>new THREE.MeshBasicMaterial({color:c});
+  // 1) female symbol
+  const vn=new THREE.Group(),vm=gloss(0x5b3fd6,1);
+  vn.add(new THREE.Mesh(new THREE.TorusGeometry(.36,.1,32,80),vm));
+  const vs=new THREE.Mesh(new THREE.CylinderGeometry(.1,.1,.66,28),vm);vs.position.y=-.69;
+  const vh=new THREE.Mesh(new THREE.CylinderGeometry(.1,.1,.56,28),vm);vh.rotation.z=Math.PI/2;vh.position.y=-.76;
+  vn.add(vs,vh,SP(.1,vm,-.28,-.76),SP(.1,vm,.28,-.76),SP(.1,vm,0,-1.02));
+  mkg(wrap(vn,0,.32),-.74,.4,.8,0,{sc:.9});
+  // 2) language tiles: A / अ / ಕ  (Hindi, Kannada, English)
+  const tex=(ch,font,col)=>{const c=document.createElement('canvas');c.width=c.height=256;const t=new THREE.CanvasTexture(c);const dr=()=>{const x=c.getContext('2d');x.clearRect(0,0,256,256);x.fillStyle=col;x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillText(ch,128,138);t.needsUpdate=true};dr();return[t,dr]};
+  const lg=new THREE.Group(),draws=[];
+  [['A',"700 150px 'Space Grotesk',sans-serif",'#5b3fd6',0xefeaff,-.4,.34,.14],['अ',"700 150px 'Noto Sans Devanagari',sans-serif",'#ffffff',0x3b2fb0,0,0,-.08],['ಕ',"700 150px 'Noto Sans Kannada',sans-serif",'#5b3fd6',0xefeaff,.4,-.34,.1]].forEach((q,i)=>{
+    const td=tex(q[0],q[1],q[2]);draws.push(td[1]);
+    const tl=new THREE.Group(),fc=new THREE.Mesh(new THREE.PlaneGeometry(.5,.5),new THREE.MeshBasicMaterial({map:td[0],transparent:true}));fc.position.z=.101;
+    tl.add(new THREE.Mesh(EX(rr(.5,.5,.14),.12,.04),gloss(q[3],1)),fc);tl.position.set(q[4],q[5],i*.08);tl.rotation.z=q[6];lg.add(tl)});
+  document.fonts.load("700 100px 'Noto Sans Devanagari'","अ").then(()=>document.fonts.load("700 100px 'Noto Sans Kannada'","ಕ")).then(()=>draws.forEach(f=>f())).catch(()=>{});
+  mkg(lg,.74,.4,.8,2,{sc:.95});
+  // 3) the womb: the decision this app is about
+  const ut=new THREE.Group(),um=gloss(0xa57bff,1),us=new THREE.Shape();
+  us.moveTo(0,-.62);us.bezierCurveTo(-.12,-.62,-.16,-.45,-.2,-.25);us.bezierCurveTo(-.45,-.05,-.5,.18,-.38,.38);us.bezierCurveTo(-.25,.58,.25,.58,.38,.38);us.bezierCurveTo(.5,.18,.45,-.05,.2,-.25);us.bezierCurveTo(.16,-.45,.12,-.62,0,-.62);
+  ut.add(new THREE.Mesh(EX(us,.2,.08),um));
+  const om=gloss(0xd8c9ff,1);
+  [-1,1].forEach(d=>{ut.add(TB([[d*.34,.42],[d*.62,.58],[d*.9,.46],[d*.98,.2]],.045,um,50),SP(.1,om,d*1.0,.1))});
+  mkg(ut,.72,-.46,.7,4,{sc:.72});
+  // 4) chat bubble (asking once more)
+  const bub=new THREE.Group(),bm=gloss(0xffffff,1);
+  const tl2=new THREE.Shape();tl2.moveTo(-.42,-.3);tl2.lineTo(-.5,-.68);tl2.lineTo(-.1,-.32);
+  const tg=new THREE.ExtrudeGeometry(tl2,{depth:.2,bevelEnabled:true,bevelThickness:.05,bevelSize:.05,bevelSegments:6});tg.translate(0,0,-.1);
+  bub.add(new THREE.Mesh(EX(rr(1.2,.8,.3),.2,.05),bm),new THREE.Mesh(tg,bm));
+  const dtm=gloss(0x5b3fd6,1),dots=[-.3,0,.3].map(x=>{const d=new THREE.Mesh(new THREE.SphereGeometry(.085,24,24),dtm);d.position.set(x,0,.2);bub.add(d);return d});
+  mkg(wrap(bub,0,.1),-.72,-.48,.7,4,{sc:.85,dots});
+  const size=()=>{R.setSize(innerWidth,innerHeight,false);cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix()};size();addEventListener('resize',size);
+  let wasShard=false;const fl=$('#flash');
+  GL=ts=>{
+    const [y,s]=pose(cur.t),e=ss(6.5,8.2,cur.t),k=Math.min(1,(cam.aspect+.35)/1.4);
+    mouse.sx=lerp(mouse.sx,mouse.x,.05);mouse.sy=lerp(mouse.sy,mouse.y,.05);
+    pulse*=.92;if(!drag){vY*=.95;vX*=.9;spinX*=.96}vX=clamp(vX,-.08,.08);vY=clamp(vY,-.25,.25);spinX=clamp(spinX+vX,-1.2,1.2);spinY+=vY;S.rotation.set(spinX,spinY,0);
+    g.position.set(mouse.sx*.12,y*k-mouse.sy*.05,0);g.scale.setScalar(s*k*(1+pulse*.1));g.visible=e<.999;
+    U.t.value=ts/1000;U.m.value.set(mouse.sx,mouse.sy);
+    const shard=e>.002;
+    if(shard!==wasShard){wasShard=shard;fl.style.transition='none';fl.style.opacity=.5;requestAnimationFrame(()=>{fl.style.transition='opacity .7s';fl.style.opacity=0})}
+    S.visible=!shard;H.visible=shard;halo.visible=true;
+    SU.e.value=e;SU.o.value=1-ss(.72,1,e);U.o.value=1-ss(.3,1,e);
+    H.rotation.set(-mouse.sy*.25+e*.5,mouse.sx*.35+e*.9,0);
+    const hv=1-ss(.1,.7,cur.t),hw=Math.tan(17.5*Math.PI/180)*6*cam.aspect,hh=Math.tan(17.5*Math.PI/180)*6,tt=ts/1000;
+    dl.position.set(-3+mouse.sx*3.5,4-mouse.sy*2.5,5);pl.position.set(3+mouse.sx*2.5,-2-mouse.sy*2,4);D.visible=hv>.01;D.scale.setScalar(Math.max(hv,.001)*k);D.position.set(mouse.sx*.25,-mouse.sy*.15,0);
+    D.children.forEach(m=>{const u=m.userData;m.position.set(u.fx*hw/Math.max(k,.5),u.fy*hh+Math.sin(tt*u.sp+u.ph)*.09,0);
+      m.rotation.set(Math.sin(tt*.5*u.sp+u.ph)*.18,Math.sin(tt*.6*u.sp+u.ph)*.55,Math.sin(tt*.4*u.sp+u.ph)*.08);
+      const z=u.sc*(1+pulse*.05);m.scale.setScalar(z);if(u.dots)u.dots.forEach((d,i)=>d.position.y=Math.sin(tt*4-i*.9)*.05)});
+    R.render(sc,cam);
+  };
+}catch(err){$('#gl').style.display='none'}
+
+const GS=$('#gloss');
+(function loop(ts){
+  cur.t=lerp(cur.t,scrollY/innerHeight,RM?1:.12);
+  if(!RM){const pr=clamp(scrollY/Math.max(1,document.documentElement.scrollHeight-innerHeight),0,1);
+    GS.style.setProperty('--gx',(pr*100).toFixed(1)+'%');GS.style.setProperty('--mx',((mouse.sx*.5+.5)*100).toFixed(1)+'%');GS.style.setProperty('--my',((mouse.sy*.5+.5)*100).toFixed(1)+'%')}
+  ui(cur.t);if(GL)GL(ts);requestAnimationFrame(loop);
+})(0);
+(function(){const els=document.querySelectorAll('.rv');
+  if(RM||!('IntersectionObserver' in window)){els.forEach(e=>e.classList.add('in','live'));return}
+  const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');setTimeout(()=>x.target.classList.add('live'),1500);io.unobserve(x.target)}}),{threshold:.12});
+  els.forEach(e=>io.observe(e));
+})();
+/* flash-card tilt + glare */
+(function(){
+  if(RM||!matchMedia('(hover:hover) and (pointer:fine)').matches)return;
+  document.querySelectorAll('.tilt').forEach(c=>{
+    c.addEventListener('pointermove',e=>{
+      const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;
+      c.style.setProperty('--ry',((x-.5)*8).toFixed(2)+'deg');c.style.setProperty('--rx',((.5-y)*8).toFixed(2)+'deg');
+      c.style.setProperty('--px',(x*100).toFixed(1)+'%');c.style.setProperty('--py',(y*100).toFixed(1)+'%');
+    });
+    c.addEventListener('pointerleave',()=>{c.style.setProperty('--rx','0deg');c.style.setProperty('--ry','0deg')});
+  });
+})();
+/* dashboard: interactive districts */
+(function(){
+  const P=[...document.querySelectorAll('.mapc .d')],B=[...document.querySelectorAll('.mapc .cb')],mc=$('.mapc');
+  if(!P.length)return;
+  let cu=-1,auto=true;const tw={};
+  const tween=(el,to)=>{const from=+el.textContent||0,t0=performance.now();cancelAnimationFrame(tw[el.id]);
+    (function f(n){const k=Math.min(1,(n-t0)/600);el.textContent=Math.round(from+(to-from)*(1-Math.pow(1-k,3)));if(k<1)tw[el.id]=requestAnimationFrame(f)})(t0)};
+  function sel(i){if(i===cu)return;cu=i;const p=P[i];
+    const so=$('.mapc .selo');so.setAttribute('points',p.getAttribute('points'));so.style.animation='none';so.getBoundingClientRect();so.style.animation='';B.forEach((b,j)=>b.classList.toggle('hot',j===i));
+    $('#dn').textContent=p.dataset.n;tween($('#dcn'),+p.dataset.c);tween($('#dfn'),+p.dataset.f);$('#dfn').classList.toggle('on',+p.dataset.f>0)}
+  P.forEach((p,i)=>['pointerenter','click','focus'].forEach(ev=>p.addEventListener(ev,()=>{auto=false;sel(i)})));
+  mc.addEventListener('pointerleave',()=>{auto=true});
+  sel(4);setInterval(()=>{if(auto&&!RM)sel((cu+1)%P.length)},2600);
+})();
+</script>
+</body>
+</html>
