@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { useLanguage } from '../LanguageContext'
-import { useAuth } from '../AuthContext'
+import { useT } from '../i18n'
+import Shell from '../components/Shell'
 
 const LANGUAGES = [
   { code: 'en', label: 'English' },
@@ -10,7 +11,7 @@ const LANGUAGES = [
 
 export default function LanguagePicker() {
   const { setLang } = useLanguage()
-  const { asha, logout } = useAuth()
+  const t = useT()
   const navigate = useNavigate()
 
   function choose(code) {
@@ -19,37 +20,18 @@ export default function LanguagePicker() {
   }
 
   return (
-    <div>
-      <div className="tiles">
-        <div className="tile tile-pink">
-          <span className="tile-label">ASHA code</span>
-          <span className="tile-value">{asha.code}</span>
-        </div>
-        <div className="tile tile-blue">
-          <span className="tile-label">District</span>
-          <span className="tile-value">{asha.district}</span>
+    <Shell title={t('chooseLanguage')} step="language" tiles exit={false} guide={t('guideStart')}>
+      <div className="sh-card">
+        <h2>{t('chooseLanguage')}</h2>
+        <p>{t('chooseLanguageSub')}</p>
+        <div className="sh-lang">
+          {LANGUAGES.map((l) => (
+            <button key={l.code} className="sh-btn" onClick={() => choose(l.code)}>
+              {l.label}
+            </button>
+          ))}
         </div>
       </div>
-
-      <div className="card">
-        <h1>Choose a language</h1>
-        <p>भाषा चुनें · ಭಾಷೆ ಆಯ್ಕೆಮಾಡಿ</p>
-        {LANGUAGES.map((l) => (
-          <button key={l.code} className="btn-big" onClick={() => choose(l.code)}>
-            {l.label}
-          </button>
-        ))}
-      </div>
-
-      <button
-        className="link-back"
-        onClick={() => {
-          logout()
-          navigate('/')
-        }}
-      >
-        Log out
-      </button>
-    </div>
+    </Shell>
   )
 }
