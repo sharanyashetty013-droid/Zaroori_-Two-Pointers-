@@ -353,3 +353,39 @@ body.rd-bg .app { max-width: 760px; padding: 16px 16px 48px; }
 @media (min-width: 900px) {
   .rd-choices { grid-template-columns: 1fr 1fr; }
 }
+
+/* ===== Red screen layout: compact, two columns on wide screens ===== */
+.rd-grid { display: flex; flex-direction: column; }
+.rd-left, .rd-right { display: contents; }
+.rd-help { order: 1; }
+.rd-rights { order: 2; }
+.rd-note { order: 3; }
+.rd-actions { order: 4; }
+.rd-listen { align-self: flex-start; }
+.rd-done { max-width: 560px; }
+
+@media (min-width: 900px) {
+  body.rd-bg .app { max-width: 1120px; padding: 18px 28px 24px; }
+  .rd-top { margin-bottom: 18px; }
+  .rd-grid {
+    display: grid; grid-template-columns: 1fr 1fr; column-gap: 40px; align-items: start;
+  }
+  .rd-left, .rd-right { display: block; min-width: 0; }
+  .rd-right { padding-left: 40px; border-left: 1px solid rgba(255, 255, 255, 0.3); }
+  .rd-title { font-size: 2.2rem; margin-bottom: 10px; }
+  .rd-lead { font-size: 1.12rem; margin-bottom: 14px; }
+  .rd-listen { margin-bottom: 16px; min-height: 48px; }
+  .rd-box { padding: 18px 22px; margin-bottom: 14px; }
+  .rd-list { font-size: 1.08rem; }
+  .rd-list li { margin-bottom: 6px; }
+  .rd-call { min-height: 58px; margin-bottom: 8px; }
+  .rd-note { margin: 0 0 16px; }
+  .rd-actions { display: grid; gap: 4px; }
+  .rd-link { margin: 0; padding: 8px 0; }
+
+  /* consent: Yes and No stacked, identical size, centred next to the question */
+  .rd-center { display: flex; flex-direction: column; justify-content: center; min-height: 360px; }
+  .rd-choices { grid-template-columns: 1fr; margin: 0; }
+  .rd-choice { min-height: 78px; }
+  .rd-done { margin: 0 auto; }
+}

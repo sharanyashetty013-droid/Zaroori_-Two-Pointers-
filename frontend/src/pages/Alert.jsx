@@ -97,76 +97,84 @@ export default function Alert() {
       </div>
 
       {view === 'rights' && (
-        <>
-          <h1 className="rd-title">{a.headline}</h1>
-          <p className="rd-lead">{a.body}</p>
-          {listenBtn(spokenRights)}
+        <div className="rd-grid">
+          <div className="rd-left">
+            <h1 className="rd-title">{a.headline}</h1>
+            <p className="rd-lead">{a.body}</p>
+            {listenBtn(spokenRights)}
 
-          <div className="rd-box">
-            <h2>{a.rightsTitle}</h2>
-            <ul className="rd-list">
-              {rights.map((r) => (
-                <li key={r}>{r}</li>
+            <div className="rd-box rd-rights">
+              <h2>{a.rightsTitle}</h2>
+              <ul className="rd-list">
+                {rights.map((r) => (
+                  <li key={r}>{r}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <div className="rd-right">
+            <div className="rd-box rd-help">
+              <h2>{a.helpTitle}</h2>
+              {HELPLINES.map((h) => (
+                <a key={h.number} className="rd-call" href={'tel:' + h.number}>
+                  <span>
+                    <Icon d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z" />
+                    {a[h.key]}
+                  </span>
+                  <strong>{h.number}</strong>
+                </a>
               ))}
-            </ul>
-          </div>
+            </div>
 
-          <div className="rd-box">
-            <h2>{a.helpTitle}</h2>
-            {HELPLINES.map((h) => (
-              <a key={h.number} className="rd-call" href={'tel:' + h.number}>
-                <span>
-                  <Icon d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z" />
-                  {a[h.key]}
-                </span>
-                <strong>{h.number}</strong>
-              </a>
-            ))}
-          </div>
+            <div className="rd-note">
+              <strong>ASHA</strong>
+              <p>{a.guideRights}</p>
+            </div>
 
-          <div className="rd-note">
-            <strong>ASHA</strong>
-            <p>{a.guideRights}</p>
+            <div className="rd-actions">
+              <button className="rd-btn ghost" onClick={() => setView('consent')}>
+                {a.toConsent}
+              </button>
+              <button
+                className="rd-link"
+                onClick={() => navigate('/result', { state: { answers, hospitalId, slipCode } })}
+              >
+                &#8592; {a.backResult}
+              </button>
+            </div>
           </div>
-
-          <button className="rd-btn ghost" onClick={() => setView('consent')}>
-            {a.toConsent}
-          </button>
-          <button
-            className="rd-link"
-            onClick={() => navigate('/result', { state: { answers, hospitalId, slipCode } })}
-          >
-            &#8592; {a.backResult}
-          </button>
-        </>
+        </div>
       )}
 
       {view === 'consent' && (
-        <>
-          <h1 className="rd-title">{a.consentTitle}</h1>
-          <p className="rd-lead">{a.consentQ}</p>
-          {listenBtn(a.consentQ)}
-
-          {failed && <div className="rd-fail">{a.failed}</div>}
-
-          <div className="rd-choices">
-            <button className="rd-choice" disabled={sending} onClick={send}>
-              {sending ? a.sending : failed ? a.retry : a.yes}
-            </button>
-            <button className="rd-choice" disabled={sending} onClick={() => setView('rights')}>
-              {a.no}
-            </button>
+        <div className="rd-grid">
+          <div className="rd-left">
+            <h1 className="rd-title">{a.consentTitle}</h1>
+            <p className="rd-lead">{a.consentQ}</p>
+            {listenBtn(a.consentQ)}
+            <div className="rd-note">
+              <strong>ASHA</strong>
+              <p>{a.guideConsent}</p>
+            </div>
           </div>
 
-          <div className="rd-note">
-            <strong>ASHA</strong>
-            <p>{a.guideConsent}</p>
+          <div className="rd-right rd-center">
+            {failed && <div className="rd-fail">{a.failed}</div>}
+            <div className="rd-choices">
+              <button className="rd-choice" disabled={sending} onClick={send}>
+                {sending ? a.sending : failed ? a.retry : a.yes}
+              </button>
+              <button className="rd-choice" disabled={sending} onClick={() => setView('rights')}>
+                {a.no}
+              </button>
+            </div>
           </div>
-        </>
+        </div>
       )}
 
       {view === 'done' && (
-        <>
+        <div className="rd-done">
           <h1 className="rd-title">{a.sentTitle}</h1>
           <p className="rd-lead">{a.sentBody}</p>
           <div className="rd-box">
@@ -177,7 +185,7 @@ export default function Alert() {
           <button className="rd-btn" onClick={() => navigate('/language', { replace: true })}>
             {a.finish}
           </button>
-        </>
+        </div>
       )}
     </div>
   )
