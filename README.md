@@ -197,11 +197,11 @@ window.ZAROORI_CONFIG = {
 
 ##  Privacy and safety
 
-- 🕶️ Anonymous by design: only session ID, language, age band, district, advising hospital, answers, coercion flag and timestamp
-- ✅ Consent shown before any case is sent
-- 📍 Alerts carry the **district only**, never identity
-- ⚖️ Red-screen content and helpline numbers verified by a legal or NGO partner before launch
-- 🏷️ Demo data is always labelled as demo
+-  Anonymous by design: only session ID, language, age band, district, advising hospital, answers, coercion flag and timestamp
+-  Consent shown before any case is sent
+-  Alerts carry the **district only**, never identity
+-  Red-screen content and helpline numbers verified by a legal or NGO partner before launch
+-  Demo data is always labelled as demo
 
 ---
 
