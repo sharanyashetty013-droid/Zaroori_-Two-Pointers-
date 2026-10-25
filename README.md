@@ -208,7 +208,6 @@ window.ZAROORI_CONFIG = {
 <div align="center">
 
 ### Built with ❤️ for **recHERsion 2026**
-Frontend · Backend · AI & Data
 
 *Zaroori? Because a big decision deserves one more question.*
 
