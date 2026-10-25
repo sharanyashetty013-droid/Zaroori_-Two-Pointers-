@@ -15,7 +15,8 @@
 ## 🚀 Try it
 
 - **Live app:** https://zaroori-virid.vercel.app
-- **ASHA login:** `asha_xo9U9ovrax6wbEGxTehHpAhrQ5pkESS8` · **Officials dashboard:** `a98caf4e9d634f8746b96ef90cb372826410c36e348d44c3`
+- **ASHA login** (`/login`): `asha_xo9U9ovrax6wbEGxTehHpAhrQ5pkESS8`
+- **Officials dashboard** (`/officials`): `a98caf4e9d634f8746b96ef90cb372826410c36e348d44c3`
 - Judge test accounts are on the login pages. No real ASHA worker or patient data is used anywhere.
 - The backend is on a free tier, so the first load can take about a minute to wake up.
 
